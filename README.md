@@ -102,6 +102,7 @@ One thing I really miss when using CoreAnimation and `CABasicAnimation` is that 
 Here's how the code to create a spring animation for the layer position and corner radius looks like:
 
 <table width="100%">
+<th>EasyAnimation</th>
 <tr>
 <td valign="top">
 <pre lang="Swift">
@@ -130,6 +131,7 @@ Chain Animations
 **EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations like this:
 
 <table width="100%">
+<th>EasyAnimation</th>
 <tr>
 <td valign="top">
 <pre lang="Swift">
