@@ -39,11 +39,11 @@ Easy Layer Animations
 </pre>
 </td>
 <td valign="top">
-```swift
+<pre lang="Swift">
     UIView.animateWithDuration(2.0, animations: {
         self.view.layer.position.x = 200.0
     })
-```
+</pre>
 </td>
 </tr>
 </table>
@@ -55,7 +55,7 @@ Or if you need to specify delay, animation options and/or animation curve:
 <th>EasyAnimation</th>
 <tr>
 <td valign="top">
-
+<pre lang="Swift">
     let anim = CABasicAnimation(keyPath: "position.x")
     anim.fromValue = 100.0
     anim.toValue = 200.0
@@ -67,14 +67,16 @@ Or if you need to specify delay, animation options and/or animation curve:
     anim.repeatCount = Float.infinity
     anim.autoreverses = true
     view.layer.addAnimation(anim, forKey: nil)
+</pre>
 </td>
 <td valign="top">
-
+<pre lang="Swift">
     UIView.animateWithDuration(2.0, delay: 2.0, 
         options: .Repeat | .Autoreverse | .CurveEaseOut, 
         animations: {
         self.view.layer.position.x = 200.0
     }, completion: nil)
+</pre>
 </td>
 </tr>
 </table>
@@ -94,7 +96,7 @@ Here's how the code to create a spring animation for the layer position and corn
 <table width="100%">
 <tr>
 <td valign="top">
-
+<pre lang="Swift">
     UIView.animateWithDuration(2.0, delay: 0.0, 
       usingSpringWithDamping: 0.25, 
       initialSpringVelocity: 0.0, 
@@ -103,7 +105,7 @@ Here's how the code to create a spring animation for the layer position and corn
         self.view.layer.position.x = 200.0
         self.view.layer.cornerRadius = 50.0
     }, completion: nil)
-
+</pre>
 </td>
 </tr>
 </table>
@@ -122,7 +124,7 @@ Chain Animations
 <table width="100%">
 <tr>
 <td valign="top">
-
+<pre lang="Swift">
     UIView.animateAndChainWithDuration(1.0, delay: 0.0, 
       options: nil, animations: {
         self.view.center.y += 100
@@ -133,6 +135,7 @@ Chain Animations
     }).animateWithDuration(1.0, animations: {
         self.view.center.x -= 100
     })
+</pre>
 </td>
 </tr>
 </table>
