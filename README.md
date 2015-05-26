@@ -30,15 +30,13 @@ Easy Layer Animations
 <th>EasyAnimation</th>
 <tr>
 <td valign="top">
-
-```Swift
+<pre lang="Swift">
     let anim = CABasicAnimation(keyPath: "position.x")
     anim.fromValue = 100.0
     anim.toValue = 200.0
     anim.duration = 2.0
     view.layer.addAnimation(anim, forKey: nil)
-```
-
+</pre>
 </td>
 <td valign="top">
 ```swift
