@@ -18,13 +18,13 @@ Intro
 
 `UIView.animateWithDuration:animations:` is really easy to use and you're so familiar with its syntax that you often want it to do just a bit more for you automatically. But it doesn't and you need to import *Bloated.framework* by *Beginner Ninja Coder* in order to make a bit more advanced animations than what `animateWithDuration:animations:` allows you to.
 
-**EasyAnimation** extends what UIKit offers in terms of animations and makes you life much easier because you can do much more without learning some perky new syntax.
+**EasyAnimation** extends what UIKit offers in terms of animations and makes your life much easier because you can do much more without learning some perky new syntax.
 
 <a name="layers"></a>
-Layers
+Easy Layer Animations
 ========
 
-EasyAnimation allows you to animate your layers straight from `animateWithDuration:animations:`. No more `CABasicAnimation` code for you. Just adjust the properties of your layers from within the `animations` block and EasyAnimation will take care of the rest:
+**EasyAnimation** allows you to animate your layers straight from `animateWithDuration:animations:`. No more `CABasicAnimation` code for you. Just adjust the properties of your layers from within the `animations` block and **EasyAnimation** will take care of the rest:
 <table width="100%">
 <th>CoreAnimation</th>
 <th>EasyAnimation</th>
@@ -77,7 +77,9 @@ Or if you need to specify delay, animation options and/or animation curve:
 </tr>
 </table>
 
-And if you want to execute to a piece of code after the animation is completed - good luck setting up your animation delegate and writing methods. With `EasyAnimation` you just put your code as the `completion` parameter value and EasyAnimation executes it for you when your animation completes.
+And if you want to execute a piece of code after the animation is completed - good luck setting up your animation delegate and writing the delegate methods. 
+
+With **EasyAnimation** you just put your code as the `completion` parameter value and **EasyAnimation** executes it for you when your animation completes.
 
 <a name="springs"></a>
 
@@ -104,7 +106,7 @@ Here's how the code to create a spring animation for the layer position and corn
 </tr>
 </table>
 
-[Sam Davies](https://github.com/sammyd) collaborated on the spring animations code. Thanks a ton - I couldn't have figured it out without you!
+[Sam Davies](https://github.com/sammyd) collaborated on the spring animations code. Thanks a ton - I couldn't have figured this one on my own!
 
 <a name="chains"></a>
 
@@ -113,7 +115,7 @@ Chain Animations
 
 `animateWithDuration:animations:` is really handy but chaining one animation after another is a major pain (especially if we are talking about more than 2 animations).
 
-`EasyAnimation` allows you to simply use a similar method to just chain more than one animations.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations like this:
+**EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations like this:
 
 <table width="100%">
 <tr>
@@ -133,9 +135,11 @@ Chain Animations
 </tr>
 </table>
 
+*Yes - that works, give it a try in your project :]*
+
 This code will animate the view along a rectangular path - first downwards, then to the right, then up, then to the initial point where the animation started.
 
-What a perfect oportunity to repeat the animation and make the animation run continuosly! Add options parameter to the last `animateWithDuration` in the chain and turn on the `.Repeat` option. 
+What a perfect oportunity to repeat the animation and make the animation run continuosly! Add `options` parameter to the last `animateWithDuration...` in the chain and turn on the `.Repeat` option. 
 
 This will make the whole chain (e.g. the 4 animations) repeat continuosly.
 
