@@ -27,7 +27,6 @@ Easy Layer Animations
 **EasyAnimation** allows you to animate your layers straight from `animateWithDuration:animations:`. No more `CABasicAnimation` code for you. Just adjust the properties of your layers from within the `animations` block and **EasyAnimation** will take care of the rest:
 <table width="100%">
 <th>CoreAnimation</th>
-<th>EasyAnimation</th>
 <tr>
 <td valign="top">
 <pre lang="Swift">
@@ -38,6 +37,11 @@ Easy Layer Animations
     view.layer.addAnimation(anim, forKey: nil)
 </pre>
 </td>
+</tr>
+</table>
+<table width="100%">
+<th>EasyAnimation</th>
+<tr>
 <td valign="top">
 <pre lang="Swift">
     UIView.animateWithDuration(2.0, animations: {
