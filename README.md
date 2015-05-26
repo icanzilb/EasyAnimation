@@ -30,18 +30,20 @@ Easy Layer Animations
 <th>EasyAnimation</th>
 <tr>
 <td valign="top">
-
+```swift
     let anim = CABasicAnimation(keyPath: "position.x")
     anim.fromValue = 100.0
     anim.toValue = 200.0
     anim.duration = 2.0
     view.layer.addAnimation(anim, forKey: nil)
+```
 </td>
 <td valign="top">
-
+```swift
     UIView.animateWithDuration(2.0, animations: {
         self.view.layer.position.x = 200.0
     })
+```
 </td>
 </tr>
 </table>
