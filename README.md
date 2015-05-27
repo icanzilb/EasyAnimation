@@ -4,13 +4,13 @@
 
 <table width="100%">
 <tr>
-<td width="250">
+<td width="300">
 <a href="#intro">Intro</a><br>
 <a href="#layers">Layer Animations</a><br>
 <a href="#springs">Spring Layer Animations</a><br>
 <a href="#chains">Chain Animations</a><br>
 </td>
-<td width="250">
+<td width="300">
 <a href="#installation">Installation</a><br>
 <a href="#credit">Credit</a><br>
 <a href="#license">License</a><br>
@@ -59,6 +59,8 @@ Easy Layer Animations
 </tr>
 </table>
 
+![](etc/moveX.gif)
+
 Or if you need to specify delay, animation options and/or animation curve:
 
 <table width="100%">
@@ -89,12 +91,19 @@ Or if you need to specify delay, animation options and/or animation curve:
     UIView.animateWithDuration(2.0, delay: 2.0, 
         options: .Repeat | .Autoreverse | .CurveEaseOut, 
         animations: {
-        self.view.layer.position.x = 200.0
+        self.view.layer.position.x += 200.0
+
+        // let's add more animations 
+        // to make it more interesting!
+        self.view.layer.cornerRadius = 20.0
+        self.view.layer.borderWidth = 5.0
     }, completion: nil)
 </pre>
 </td>
 </tr>
 </table>
+
+![](etc/corners.gif)
 
 And if you want to execute a piece of code after the animation is completed - good luck setting up your animation delegate and writing the delegate methods. 
 
@@ -106,7 +115,7 @@ Spring Layer Animations
 ========
 One thing I really miss when using CoreAnimation and `CABasicAnimation` is that there's no easy way to create spring animations. Luckily a handy library called `RBBAnimation` provides an excellent implementation of spring animations for layers - I translated the code to Swift and included `RBBSpringAnimation` into `EasyAnimation`. 
 
-Here's how the code to create a spring animation for the layer position and corner radius looks like:
+Here's how the code to create a spring animation for the layer position, transform and corner radius looks like:
 
 <table width="100%">
 <th>EasyAnimation</th>
@@ -118,13 +127,16 @@ Here's how the code to create a spring animation for the layer position and corn
       initialSpringVelocity: 0.0, 
       options: nil, 
       animations: {
-        self.view.layer.position.x = 200.0
+        self.view.layer.position.x += 200.0
         self.view.layer.cornerRadius = 50.0
+        self.view.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1.0)
     }, completion: nil)
 </pre>
 </td>
 </tr>
 </table>
+
+![](etc/spring.gif)
 
 [Sam Davies](https://github.com/sammyd) collaborated on the spring animations code. Thanks a ton - I couldn't have figured this one on my own!
 
@@ -156,6 +168,8 @@ Chain Animations
 </td>
 </tr>
 </table>
+
+![](etc/chain.gif)
 
 *Yes - that works, give it a try in your project :]*
 
