@@ -5,21 +5,15 @@
 <table width="100%">
 <tr>
 <td width="250">
-<a href="#intro">Intro</a>
-
-<a href="#layers">Layer Animations</a>
-
-<a href="#springs">Spring Layer Animations</a>
-
-<a href="#chains">Chain Animations</a>
+<a href="#intro">Intro</a><br>
+<a href="#layers">Layer Animations</a><br>
+<a href="#springs">Spring Layer Animations</a><br>
+<a href="#chains">Chain Animations</a><br>
 </td>
 <td width="250">
-<a href="#installation">Installation</a>
-
-<a href="#credit">Credit</a>
-
-<a href="#license">License</a>
-
+<a href="#installation">Installation</a><br>
+<a href="#credit">Credit</a><br>
+<a href="#license">License</a><br>
 <a href="#version">Version History</a>
 </td>
 </tr>
