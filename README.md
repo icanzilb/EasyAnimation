@@ -9,6 +9,7 @@
 <a href="#layers">Layer Animations</a><br>
 <a href="#springs">Spring Layer Animations</a><br>
 <a href="#chains">Chain Animations</a><br>
+<a href="#stop">Cancel Chain Animations</a><br>
 </td>
 <td width="300">
 <a href="#installation">Installation</a><br>
@@ -181,7 +182,28 @@ This will make the whole chain (e.g. the 4 animations) repeat continuosly.
 
 If you want to pause between any two animations in the chain - just use the `delay` parameter and it will all just work.
 
-<a href="installation"></a>
+<a name="stop"></a>
+
+Cancel Chain Animations
+========
+
+If you have a repeating (or a normal) chain animation on screen you can cancel it at any time. Just grab hold of the animation object and call `cancelAnimationChain` on it any time you want.
+
+<pre lang="Swift">
+let chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0,
+    options: nil, animations: {
+        self.square.center.y += 100
+    }, completion: nil).animateWithDuration(1.0, animations: {
+  [... the rest of the animations in the chain]
+</pre>
+
+<pre lang="Swift">
+chain.cancelAnimationChain()
+</pre>
+
+The animation will not stop immediately but once it completes the current step of the chain it will stop and cancel all scheduled animations in this chain.
+
+<a name="installation"></a>
 
 Installation
 ========
