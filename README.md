@@ -1,6 +1,8 @@
 ![](etc/EA.png)
 
-#### ver 0.6
+#### ver 0.6 (beta)
+
+_This is still beta quality code - feel free to test, create issues, etc. The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
 <table width="100%">
 <tr>
@@ -245,7 +247,9 @@ To Do
 * polish spring animation to look exactly like the UIKit one
 * add `CALayer.animateWithDuration:animations:`.. for the people who want to use different methods for view and layer animations
 * `.Autoreverse` for chain animations (if possible)
+* add support for keyframe animation along the path via a custom property
 * cool demos...
+
 
 Version History
 ========
