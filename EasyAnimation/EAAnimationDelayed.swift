@@ -153,14 +153,16 @@ class EAAnimationDelayed: Equatable, Printable {
     private func animationCompleted(finished: Bool) {
         
         self.completion?(finished)
-        self.completion = nil
         
         //check for .Repeat
-        if self.loopsChain {
+        if finished && self.loopsChain {
             //find first animation in the chain and run it next
             var link = self
             while link.prevDelayedAnimation != nil {
                 link = link.prevDelayedAnimation!
+            }
+            if debug {
+                println("loop to \(link)")
             }
             link.run()
             return

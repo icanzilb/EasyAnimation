@@ -54,7 +54,9 @@ class DemoChainsViewController: UIViewController {
             self.redSquare.transform = CGAffineTransformIdentity
             self.blueSquare.layer.transform = CATransform3DIdentity
 
-        }, completion: nil)
+            }, completion: {_ in
+                println("sequence finished - will loop from start")
+        })
         
     }
 
@@ -68,9 +70,4 @@ class DemoChainsViewController: UIViewController {
         chain?.cancelAnimationChain()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        chain?.cancelAnimationChain()
-    }
 }
