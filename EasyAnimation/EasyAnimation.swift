@@ -75,7 +75,7 @@ private let specializedLayerKeys: [String: [String]] = [
 
 extension UIView {
     
-    var animationPath: CGPath? {
+    public var animationPath: CGPath? {
         get {
             return nil
         }
@@ -287,7 +287,7 @@ extension UIView {
     
         :returns: The created request.
     */
-    class func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public class func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         
         let currentAnimation = EAAnimationDelayed()
         currentAnimation.duration = duration

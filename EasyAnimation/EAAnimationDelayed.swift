@@ -31,7 +31,7 @@ import UIKit
     animateWithDuration:animation: and the like.
 */
 
-class EAAnimationDelayed: Equatable, Printable {
+public class EAAnimationDelayed: Equatable, Printable {
     
     /* debug helpers */
     private var debug: Bool = false
@@ -59,28 +59,28 @@ class EAAnimationDelayed: Equatable, Printable {
         the first link in each currently animating chain. Handy if you want to cancel all chains - just
         loop over `animations` and call `cancelAnimationChain` on each one.
     */
-    static var animations: [EAAnimationDelayed] = []
+    public static var animations: [EAAnimationDelayed] = []
     
-    func animateWithDuration(duration: NSTimeInterval, animations: () -> Void) -> EAAnimationDelayed {
+    public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void) -> EAAnimationDelayed {
         return animateWithDuration(duration, animations: animations, completion: completion)
     }
     
-    func animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         return animateWithDuration(duration, delay: delay, options: nil, animations: animations, completion: completion)
     }
     
-    func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         return animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
     }
     
-    func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         var anim = animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
         self.springDamping = dampingRatio
         self.springVelocity = velocity
         return anim
     }
     
-    func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         
         self.duration = duration
         self.delay = delay
@@ -106,7 +106,7 @@ class EAAnimationDelayed: Equatable, Printable {
         The animations will not stop immediately - the currently running animation will finish and then 
         the complete chain will be stopped and removed.
     */
-    func cancelAnimationChain() {
+    public func cancelAnimationChain() {
         var link = self
         while link.nextDelayedAnimation != nil {
             link = link.nextDelayedAnimation!
@@ -192,7 +192,7 @@ class EAAnimationDelayed: Equatable, Printable {
         }
     }
     
-    var description: String {
+    public var description: String {
         get {
             if debug {
                 return "animation #\(self.debugNumber) prev: \(self.prevDelayedAnimation?.debugNumber) next: \(self.nextDelayedAnimation?.debugNumber)"
@@ -203,7 +203,6 @@ class EAAnimationDelayed: Equatable, Printable {
     }
 }
 
-func == (lhs: EAAnimationDelayed , rhs: EAAnimationDelayed) -> Bool {
+public func == (lhs: EAAnimationDelayed , rhs: EAAnimationDelayed) -> Bool {
     return lhs === rhs
 }
-
