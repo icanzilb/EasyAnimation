@@ -13,6 +13,9 @@
 		9C2C93D11ADBC44400C56262 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C2C93CF1ADBC44400C56262 /* LaunchScreen.xib */; };
 		9C2C93DD1ADBC44400C56262 /* DemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2C93DC1ADBC44400C56262 /* DemoAppTests.swift */; };
 		9C5B83BD1B148EA7008F2E79 /* EAAnimationDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B83BC1B148EA7008F2E79 /* EAAnimationDelayed.swift */; };
+		9C62573B1B19B0DC00706AC1 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C62573A1B19B0DC00706AC1 /* MenuTableViewController.swift */; };
+		9C62573D1B19B87300706AC1 /* EABlockDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C62573C1B19B87300706AC1 /* EABlockDelegate.swift */; };
+		9C62573F1B19BC6100706AC1 /* DemoPathAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C62573E1B19BC6100706AC1 /* DemoPathAnimationViewController.swift */; };
 		9C9A05E11B13C3B80050DAEA /* RBBBlockBasedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A05DE1B13C3B80050DAEA /* RBBBlockBasedArray.swift */; };
 		9C9A05E21B13C3B80050DAEA /* RBBLinearInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A05DF1B13C3B80050DAEA /* RBBLinearInterpolation.swift */; };
 		9C9A05E31B13C3B80050DAEA /* RBBSpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A05E01B13C3B80050DAEA /* RBBSpringAnimation.swift */; };
@@ -44,6 +47,9 @@
 		9C2C93DB1ADBC44400C56262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C2C93DC1ADBC44400C56262 /* DemoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppTests.swift; sourceTree = "<group>"; };
 		9C5B83BC1B148EA7008F2E79 /* EAAnimationDelayed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EAAnimationDelayed.swift; sourceTree = "<group>"; };
+		9C62573A1B19B0DC00706AC1 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		9C62573C1B19B87300706AC1 /* EABlockDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EABlockDelegate.swift; sourceTree = "<group>"; };
+		9C62573E1B19BC6100706AC1 /* DemoPathAnimationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoPathAnimationViewController.swift; sourceTree = "<group>"; };
 		9C9A05DE1B13C3B80050DAEA /* RBBBlockBasedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBBlockBasedArray.swift; sourceTree = "<group>"; };
 		9C9A05DF1B13C3B80050DAEA /* RBBLinearInterpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBLinearInterpolation.swift; sourceTree = "<group>"; };
 		9C9A05E01B13C3B80050DAEA /* RBBSpringAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBSpringAnimation.swift; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 				9CC6BED91B185E0C00110DEB /* assets */,
 				9CC6BED81B185DF700110DEB /* Demos */,
 				9C2C93C61ADBC44400C56262 /* AppDelegate.swift */,
+				9C62573A1B19B0DC00706AC1 /* MenuTableViewController.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
@@ -143,6 +150,7 @@
 				9CC6BED21B184FA300110DEB /* DemoSpringAnimationsViewController.swift */,
 				9CC6BED41B18527D00110DEB /* DemoChainsViewController.swift */,
 				9CC6BED61B18554E00110DEB /* DemoMultipleAnimationsViewController.swift */,
+				9C62573E1B19BC6100706AC1 /* DemoPathAnimationViewController.swift */,
 			);
 			name = Demos;
 			sourceTree = "<group>";
@@ -164,6 +172,7 @@
 				9CFE78B51B0FE544006DBC7A /* EasyAnimation.swift */,
 				9C5B83BC1B148EA7008F2E79 /* EAAnimationDelayed.swift */,
 				9C9A05DD1B13C3B80050DAEA /* RBBSpringAnimation */,
+				9C62573C1B19B87300706AC1 /* EABlockDelegate.swift */,
 			);
 			name = EasyAnimation;
 			path = ../EasyAnimation;
@@ -276,7 +285,10 @@
 				9CC6BED51B18527D00110DEB /* DemoChainsViewController.swift in Sources */,
 				9C9A05E31B13C3B80050DAEA /* RBBSpringAnimation.swift in Sources */,
 				9C9A05E11B13C3B80050DAEA /* RBBBlockBasedArray.swift in Sources */,
+				9C62573F1B19BC6100706AC1 /* DemoPathAnimationViewController.swift in Sources */,
 				9CFE78B61B0FE544006DBC7A /* EasyAnimation.swift in Sources */,
+				9C62573D1B19B87300706AC1 /* EABlockDelegate.swift in Sources */,
+				9C62573B1B19B0DC00706AC1 /* MenuTableViewController.swift in Sources */,
 				9C9A05E21B13C3B80050DAEA /* RBBLinearInterpolation.swift in Sources */,
 				9CC6BED31B184FA300110DEB /* DemoSpringAnimationsViewController.swift in Sources */,
 			);

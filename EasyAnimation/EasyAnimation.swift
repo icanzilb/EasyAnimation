@@ -31,7 +31,7 @@ import ObjectiveC
 private struct PendingAnimation {
     let layer: CALayer
     let keyPath: String
-    let fromValue: AnyObject
+    let fromValue: Any
 }
 
 private class AnimationContext {
@@ -51,7 +51,7 @@ private var activeAnimationContexts = [AnimationContext]()
 
 // MARK: animatable properties
 
-private let vanillaLayerKeys = [
+private let vanillaLayerKeys: [String] = [
     "anchorPoint",
     "backgroundColor", "backgroundFilters", "borderColor", "borderWidth", "bounds",
     "compositingFilter", "contents", "contentsRect", "cornerRadius", "doubleSided",
@@ -80,7 +80,12 @@ extension UIView {
             return nil
         }
         set {
-            //TODO: add keyframe path animation
+            if newValue != nil && activeAnimationContexts.count > 0 {
+                //found an animatable property - add the pending animation
+                activeAnimationContexts.last!.pendingAnimations.append(
+                    PendingAnimation(layer: layer, keyPath: "animationPath", fromValue: newValue!)
+                )
+            }
         }
     }
     
@@ -127,10 +132,9 @@ extension UIView {
                 if contains(vanillaLayerKeys, key) ||
                     (specializedLayerKeys[layer.classForCoder.description()] != nil && contains(specializedLayerKeys[layer.classForCoder.description()]!, key)) {
                     
-                        //found an animatable property - add the pending animation
-                        activeAnimationContexts.last!.pendingAnimations.append(
-                            PendingAnimation(layer: layer, keyPath: key, fromValue: layer.valueForKey(key)!
-                        )
+                    //found an animatable property - add the pending animation
+                    activeAnimationContexts.last!.pendingAnimations.append(
+                        PendingAnimation(layer: layer, keyPath: key, fromValue: layer.valueForKey(key)!)
                     )
                 }
             }
@@ -194,7 +198,16 @@ extension UIView {
         
         //run pending animations
         for anim in context.pendingAnimations {
-            anim.layer.addAnimation(EA_animation(anim, context: context), forKey: nil)
+            let caAnimation = EA_animation(anim, context: context)
+            if let ka = caAnimation as? CAKeyframeAnimation {
+                ka.delegate = EABlockDelegate(didStop: {_,_ in
+                    println("keyframe animation finished")
+                    println("model: \((anim.layer as! CALayer).valueForKey(ka.keyPath))")
+                    println("presentation: \((anim.layer.presentationLayer() as! CALayer).valueForKey(ka.keyPath))")
+                    anim.layer.setValue((anim.layer.presentationLayer() as! CALayer).valueForKey(ka.keyPath), forKey: ka.keyPath)
+                })
+            }
+            anim.layer.addAnimation(caAnimation, forKey: nil)
         }
         
         CATransaction.commit()
@@ -214,7 +227,7 @@ extension UIView {
         
         let anim: CAAnimation
         
-        if (context.springDamping > 0.0) {
+        if context.springDamping > 0.0 {
             //create a layer spring animation
             anim = RBBSpringAnimation(keyPath: pending.keyPath)
             if let anim = anim as? RBBSpringAnimation {
@@ -235,10 +248,18 @@ extension UIView {
                 //NSLog("velocity: %.2f", anim.velocity)
                 //NSLog("stiffness: %.2f", anim.stiffness)
             }
+        } else if pending.keyPath == "animationPath" && CFGetTypeID(pending.fromValue as! CFTypeRef) == CGPathGetTypeID() {
+            //create path animation
+            anim = CAKeyframeAnimation(keyPath: "position")
+            if let ka = anim as? CAKeyframeAnimation {
+                ka.path = pending.fromValue as! CGPathRef
+                ka.calculationMode = kCAAnimationCubicPaced
+                ka.rotationMode = kCAAnimationRotateAuto
+            }
         } else {
             //create property animation
             anim = CABasicAnimation(keyPath: pending.keyPath)
-            (anim as! CABasicAnimation).fromValue = pending.fromValue
+            (anim as! CABasicAnimation).fromValue = pending.fromValue as! AnyObject
             (anim as! CABasicAnimation).toValue = pending.layer.valueForKey(pending.keyPath)
         }
         
@@ -246,7 +267,9 @@ extension UIView {
 
         if context.delay > 0 {
             anim.beginTime = context.delay
-            anim.fillMode = kCAFillModeBackwards
+            if anim.fillMode == kCAFillModeRemoved {
+                anim.fillMode = kCAFillModeBackwards
+            }
         }
         
         //options
