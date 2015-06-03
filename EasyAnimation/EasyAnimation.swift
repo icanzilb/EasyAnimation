@@ -282,15 +282,16 @@ extension UIView {
             
             //easing
             var timingFunctionName = kCAMediaTimingFunctionEaseInEaseOut
-            if options & UIViewAnimationOptions.CurveEaseIn.rawValue != 0 {
-                timingFunctionName = kCAMediaTimingFunctionEaseIn
-            } else if options & UIViewAnimationOptions.CurveEaseOut.rawValue != 0 {
-                timingFunctionName = kCAMediaTimingFunctionEaseOut
-            } else if options & UIViewAnimationOptions.CurveEaseInOut.rawValue != 0 {
-                timingFunctionName = kCAMediaTimingFunctionEaseInEaseOut
-            } else if options & UIViewAnimationOptions.CurveLinear.rawValue != 0 {
+            
+            if options & UIViewAnimationOptions.CurveLinear.rawValue == UIViewAnimationOptions.CurveLinear.rawValue {
+                //first check for linear (so it takes up only 2 bits)
                 timingFunctionName = kCAMediaTimingFunctionLinear
+            } else if options & UIViewAnimationOptions.CurveEaseIn.rawValue == UIViewAnimationOptions.CurveEaseIn.rawValue {
+                timingFunctionName = kCAMediaTimingFunctionEaseIn
+            } else if options & UIViewAnimationOptions.CurveEaseOut.rawValue == UIViewAnimationOptions.CurveEaseOut.rawValue {
+                timingFunctionName = kCAMediaTimingFunctionEaseOut
             }
+
             anim.timingFunction = CAMediaTimingFunction(name: timingFunctionName)
         }
         
