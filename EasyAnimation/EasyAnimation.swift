@@ -282,7 +282,7 @@ extension UIView {
             
             //easing
             var timingFunctionName = kCAMediaTimingFunctionEaseInEaseOut
-            
+
             if options & UIViewAnimationOptions.CurveLinear.rawValue == UIViewAnimationOptions.CurveLinear.rawValue {
                 //first check for linear (so it takes up only 2 bits)
                 timingFunctionName = kCAMediaTimingFunctionLinear

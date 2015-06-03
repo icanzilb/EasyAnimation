@@ -223,9 +223,9 @@ Credit
 
 Author: **Marin Todorov**
 
-* [https://github.com/icanzilb](https://github.com/icanzilb)
+* [https://www.underplot.com](https://www.underplot.com)
 * [https://twitter.com/icanzilb](https://twitter.com/icanzilb)
-* [http://www.touch-code-magazine.com/about/](http://www.touch-code-magazine.com/about/)
+
 
 Includes parts of [RBBAnimation](https://github.com/robb/RBBAnimation) by [Robert Böhnke](https://github.com/robb). The code is translated from Objective-C to Swift by Marin Todorov.
 
