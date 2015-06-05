@@ -226,6 +226,10 @@ Author: **Marin Todorov**
 * [https://www.underplot.com](https://www.underplot.com)
 * [https://twitter.com/icanzilb](https://twitter.com/icanzilb)
 
+More about Marin:
+
+<a href="http://www.ios-animations-by-tutorials.com/"><img src="http://www.underplot.com/images/thumbs/iat.jpg" width="170"></a>
+**iOS Animations by Tutorials**, Author
 
 Includes parts of [RBBAnimation](https://github.com/robb/RBBAnimation) by [Robert Böhnke](https://github.com/robb). The code is translated from Objective-C to Swift by Marin Todorov.
 
