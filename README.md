@@ -223,7 +223,7 @@ Credit
 
 Author: **Marin Todorov**
 
-* [https://www.underplot.com](https://www.underplot.com)
+* [http://www.underplot.com](http://www.underplot.com)
 * [https://twitter.com/icanzilb](https://twitter.com/icanzilb)
 
 More about Marin:
