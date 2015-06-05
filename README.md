@@ -230,6 +230,19 @@ More about Marin:
 
 <a href="http://www.ios-animations-by-tutorials.com/"><img src="http://www.underplot.com/images/thumbs/iat.jpg" width="170"></a>
 **iOS Animations by Tutorials**, Author
+=======
+<table>
+<tr>
+<td>
+<a href="http://www.ios-animations-by-tutorials.com/"><img src="http://www.underplot.com/images/thumbs/iat.jpg" width="170"><br>
+<b>iOS Animations by Tutorials</b>, Author</a>
+</td>
+<td>
+<a href="http://www.ios-animations-by-emails.com/"><img src="http://www.underplot.com/images/thumbs/ios-animations-by-emails.jpg" width="170"><br>
+iOS Animations by Emails Newsletter, Author</a>
+</td>
+</tr>
+</table>
 
 Includes parts of [RBBAnimation](https://github.com/robb/RBBAnimation) by [Robert Böhnke](https://github.com/robb). The code is translated from Objective-C to Swift by Marin Todorov.
 
