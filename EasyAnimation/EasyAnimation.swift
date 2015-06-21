@@ -54,8 +54,8 @@ private var activeAnimationContexts = [AnimationContext]()
 private let vanillaLayerKeys = [
     "anchorPoint",
     "backgroundColor", "backgroundFilters", "borderColor", "borderWidth", "bounds",
-    "compositingFilter", "contents", "contentsRect", "cornerRadius", "doubleSided",
-    "filters", "hidden", "mask", "masksToBounds", "opacity", "position",
+    "contentsRect", "cornerRadius", "doubleSided",
+    "hidden", "mask", "masksToBounds", "opacity", "position",
     "shadowColor", "shadowOffset", "shadowOpacity", "shadowPath", "shadowRadius",
     "sublayers", "sublayerTransform", "transform", "zPosition"
 ]
