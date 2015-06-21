@@ -52,12 +52,11 @@ private var activeAnimationContexts = [AnimationContext]()
 // MARK: animatable properties
 
 private let vanillaLayerKeys = [
-    "anchorPoint",
-    "backgroundColor", "backgroundFilters", "borderColor", "borderWidth", "bounds",
-    "contentsRect", "cornerRadius", "doubleSided",
-    "hidden", "mask", "masksToBounds", "opacity", "position",
-    "shadowColor", "shadowOffset", "shadowOpacity", "shadowPath", "shadowRadius",
-    "sublayers", "sublayerTransform", "transform", "zPosition"
+    "anchorPoint", "backgroundColor", "borderColor", "borderWidth", "bounds",
+    "contentsRect", "cornerRadius",
+    "opacity", "position",
+    "shadowColor", "shadowOffset", "shadowOpacity", "shadowRadius",
+    "sublayerTransform", "transform", "zPosition"
 ]
 
 private let specializedLayerKeys: [String: [String]] = [
