@@ -125,12 +125,20 @@ extension UIView {
                 
                 if contains(vanillaLayerKeys, key) ||
                     (specializedLayerKeys[layer.classForCoder.description()] != nil && contains(specializedLayerKeys[layer.classForCoder.description()]!, key)) {
-                    
+
+                        var currentKeyValue: AnyObject? = layer.valueForKey(key)
+                        
+                        //exceptions
+                        if currentKeyValue == nil && key.hasSuffix("Color") {
+                            currentKeyValue = UIColor.clearColor().CGColor
+                        }
+                        
                         //found an animatable property - add the pending animation
-                        activeAnimationContexts.last!.pendingAnimations.append(
-                            PendingAnimation(layer: layer, keyPath: key, fromValue: layer.valueForKey(key)!
-                        )
-                    )
+                        if let currentKeyValue: AnyObject = currentKeyValue {
+                            activeAnimationContexts.last!.pendingAnimations.append(
+                                PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue)
+                            )
+                        }
                 }
             }
         }
