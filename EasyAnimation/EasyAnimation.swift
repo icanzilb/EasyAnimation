@@ -346,9 +346,16 @@ extension CALayer {
             if contains(vanillaLayerKeys, key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil && contains(specializedLayerKeys[self.classForCoder.description()]!, key)) {
                     
+                    var currentKeyValue: AnyObject? = layer.valueForKey(key)
+                    
+                    //exceptions
+                    if currentKeyValue == nil && key.hasSuffix("Color") {
+                        currentKeyValue = UIColor.clearColor().CGColor
+                    }
+
                     //found an animatable property - add the pending animation
                     activeAnimationContexts.last!.pendingAnimations.append(
-                        PendingAnimation(layer: self, keyPath: key, fromValue: self.valueForKey(key)!
+                        PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue
                         )
                     )
             }
