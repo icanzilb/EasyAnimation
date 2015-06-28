@@ -48,11 +48,28 @@ private class AnimationContext {
     var nrOfUIKitAnimations: Int = 0
 }
 
+private class CompletionBlock {
+    var context: AnimationContext
+    var completion: ((Bool) -> Void)
+    var nrOfExecutions: Int = 0
+    
+    init(context c: AnimationContext, completion cb: (Bool) -> Void) {
+        context = c
+        completion = cb
+    }
+    
+    func wrapCompletion(completed: Bool) {
+        if context.nrOfUIKitAnimations > 0 || ++nrOfExecutions % 2 == 0 { //skip every other call if no uikit animations
+            completion(completed)
+        }
+    }
+}
+
 private var didEAInitialize = false
 private var didEAForLayersInitialize = false
 private var activeAnimationContexts = [AnimationContext]()
 
-// MARK: animatable properties
+// MARK: EA animatable properties
 
 private let vanillaLayerKeys = [
     "anchorPoint", "backgroundColor", "borderColor", "borderWidth", "bounds",
@@ -64,17 +81,19 @@ private let vanillaLayerKeys = [
 
 private let specializedLayerKeys: [String: [String]] = [
     CAEmitterLayer.self.description(): ["emitterPosition", "emitterZPosition", "emitterSize", "spin", "velocity", "birthRate", "lifetime"],
+    //TODO: test animating arrays, eg colors & locations
     CAGradientLayer.self.description(): ["colors", "locations", "endPoint", "startPoint"],
     CAReplicatorLayer.self.description(): ["instanceDelay", "instanceTransform", "instanceColor", "instanceRedOffset", "instanceGreenOffset", "instanceBlueOffset", "instanceAlphaOffset"],
+    //TODO: test animating paths
     CAShapeLayer.self.description(): ["path", "fillColor", "lineDashPhase", "lineWidth", "miterLimit", "strokeColor", "strokeStart", "strokeEnd"],
     CATextLayer.self.description(): ["fontSize", "foregroundColor"]
 ]
 
 public extension UIViewAnimationOptions {
-    static var FillModeNone: UIViewAnimationOptions { return UIViewAnimationOptions(0) }
-    static var FillModeForwards: UIViewAnimationOptions { return UIViewAnimationOptions(1024) }
-    static var FillModeBackwards: UIViewAnimationOptions { return UIViewAnimationOptions(2048) }
-    static var FillModeBoth: UIViewAnimationOptions { return UIViewAnimationOptions(1024 + 2048) }
+    static let FillModeNone = UIViewAnimationOptions(0)
+    static let FillModeForwards = UIViewAnimationOptions(1024)
+    static let FillModeBackwards = UIViewAnimationOptions(2048)
+    static let FillModeBoth = UIViewAnimationOptions(1024 + 2048)
 }
 
 /**
@@ -84,16 +103,10 @@ Check the README for code examples of what features this extension adds.
 
 extension UIView {
     
-    public var animationPath: CGPath? {
-        get {
-            return nil
-        }
-        set {
-            //TODO: add keyframe path animation
-        }
-    }
+    //TODO: experiment more with path animations
+    //public var animationPath: CGPath? { set {} get {return nil}}
     
-    // MARK: setup UIView
+    // MARK: UIView animation & action methods
     
     override public static func initialize() {
         if !didEAInitialize {
@@ -123,8 +136,6 @@ extension UIView {
             class_getClassMethod(self, "EA_animateWithDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:"))
         
     }
-    
-    // MARK: actionForLayer:forKey: replacement
     
     func EA_actionForLayer(layer: CALayer!, forKey key: String!) -> CAAction! {
         
@@ -158,6 +169,7 @@ extension UIView {
         return result
     }
     
+    //TODO: bring in the fix for layer-only animation chains
     class func EA_animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         //create context
         let context = AnimationContext()
@@ -186,23 +198,6 @@ extension UIView {
         }
         
         CATransaction.commit()
-    }
-    
-    private class CompletionBlock {
-        var context: AnimationContext
-        var completion: ((Bool) -> Void)
-        var nrOfExecutions: Int = 0
-        
-        init(context c: AnimationContext, completion cb: (Bool) -> Void) {
-            context = c
-            completion = cb
-        }
-        
-        func wrapCompletion(completed: Bool) {
-            if context.nrOfUIKitAnimations > 0 || ++nrOfExecutions % 2 == 0 { //skip every other call if no uikit animations
-                completion(completed)
-            }
-        }
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
@@ -248,12 +243,6 @@ extension UIView {
         CATransaction.commit()
     }
     
-    class func EA_wrappedCompletionHandler(timer: NSTimer) {
-        if let completionBlock = timer.userInfo as? CompletionBlock {
-            completionBlock.wrapCompletion(true)
-        }
-    }
-    
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
         animateWithDuration(duration, delay: 0.0, options: nil, animations: animations, completion: completion)
     }
@@ -262,6 +251,12 @@ extension UIView {
         animateWithDuration(duration, animations: animations, completion: nil)
     }
     
+    class func EA_wrappedCompletionHandler(timer: NSTimer) {
+        if let completionBlock = timer.userInfo as? CompletionBlock {
+            completionBlock.wrapCompletion(true)
+        }
+    }
+
     // MARK: create CA animation
     
     private class func EA_animation(pending: PendingAnimation, context: AnimationContext) -> CAAnimation {
@@ -374,7 +369,7 @@ extension UIView {
 }
 
 extension CALayer {
-    // MARK: setup CALayer
+    // MARK: CALayer animations
     
     override public static func initialize() {
         super.initialize()
