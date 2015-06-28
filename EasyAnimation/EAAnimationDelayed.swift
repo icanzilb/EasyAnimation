@@ -64,12 +64,31 @@ public class EAAnimationDelayed: Equatable, Printable {
     }
     var nextDelayedAnimation: EAAnimationDelayed?
     
+    //MARK: - Animation lifecycle
+    
+    init() {
+        EAAnimationDelayed.debugCount++
+        self.debugNumber = EAAnimationDelayed.debugCount
+        if debug {
+            println("animation #\(self.debugNumber)")
+        }
+        self.identifier = NSUUID().UUIDString
+    }
+    
+    deinit {
+        if debug {
+            println("deinit \(self)")
+        }
+    }
+    
     /**
     An array of all "root" animations for all currently animating chains. I.e. this array contains
     the first link in each currently animating chain. Handy if you want to cancel all chains - just
     loop over `animations` and call `cancelAnimationChain` on each one.
     */
     public static var animations: [EAAnimationDelayed] = []
+    
+    //MARK: Animation methods
     
     public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void) -> EAAnimationDelayed {
         return animateWithDuration(duration, animations: animations, completion: completion)
@@ -109,6 +128,8 @@ public class EAAnimationDelayed: Equatable, Printable {
         self.nextDelayedAnimation!.prevDelayedAnimation = self
         return self.nextDelayedAnimation!
     }
+    
+    //MARK: - Animation control methods
     
     /**
     A method to cancel the animation chain of the current animation.
@@ -202,21 +223,6 @@ public class EAAnimationDelayed: Equatable, Printable {
             self.detachFromChain()
         }
         
-    }
-    
-    init() {
-        EAAnimationDelayed.debugCount++
-        self.debugNumber = EAAnimationDelayed.debugCount
-        if debug {
-            println("animation #\(self.debugNumber)")
-        }
-        self.identifier = NSUUID().UUIDString
-    }
-    
-    deinit {
-        if debug {
-            println("deinit \(self)")
-        }
     }
     
     public var description: String {
