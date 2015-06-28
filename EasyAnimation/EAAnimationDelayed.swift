@@ -26,9 +26,9 @@
 import UIKit
 
 /**
-    A class that is used behind the scene to chain and/or delay animations.
-    You do not need to create instances directly - they are created automatically when you use
-    animateWithDuration:animation: and the like.
+A class that is used behind the scene to chain and/or delay animations.
+You do not need to create instances directly - they are created automatically when you use
+animateWithDuration:animation: and the like.
 */
 
 public class EAAnimationDelayed: Equatable, Printable {
@@ -45,19 +45,29 @@ public class EAAnimationDelayed: Equatable, Printable {
     var animations: (() -> Void)?
     var completion: ((Bool) -> Void)?
     
+    var identifier: String
+    
     var springDamping: CGFloat = 0.0
     var springVelocity: CGFloat = 0.0
     
     private var loopsChain = false
     
+    private static var cancelCompletions: [String: ()->Void] = [:]
+    
     /* animation chain links */
-    var prevDelayedAnimation: EAAnimationDelayed?
+    var prevDelayedAnimation: EAAnimationDelayed? {
+        didSet {
+            if let prev = prevDelayedAnimation {
+                identifier = prev.identifier
+            }
+        }
+    }
     var nextDelayedAnimation: EAAnimationDelayed?
     
     /**
-        An array of all "root" animations for all currently animating chains. I.e. this array contains
-        the first link in each currently animating chain. Handy if you want to cancel all chains - just
-        loop over `animations` and call `cancelAnimationChain` on each one.
+    An array of all "root" animations for all currently animating chains. I.e. this array contains
+    the first link in each currently animating chain. Handy if you want to cancel all chains - just
+    loop over `animations` and call `cancelAnimationChain` on each one.
     */
     public static var animations: [EAAnimationDelayed] = []
     
@@ -101,19 +111,24 @@ public class EAAnimationDelayed: Equatable, Printable {
     }
     
     /**
-        A method to cancel the animation chain of the current animation.
-        This method cancels and removes all animations that are chained to each other in one chain.
-        The animations will not stop immediately - the currently running animation will finish and then 
-        the complete chain will be stopped and removed.
+    A method to cancel the animation chain of the current animation.
+    This method cancels and removes all animations that are chained to each other in one chain.
+    The animations will not stop immediately - the currently running animation will finish and then
+    the complete chain will be stopped and removed.
+    
+    :param: completion completion closure
     */
-    public func cancelAnimationChain() {
+    
+    public func cancelAnimationChain(completion: (()->Void)? = nil) {
+        EAAnimationDelayed.cancelCompletions[identifier] = completion
+        
         var link = self
         while link.nextDelayedAnimation != nil {
             link = link.nextDelayedAnimation!
         }
-
+        
         link.detachFromChain()
-
+        
         if debug {
             println("cancelled top animation: \(link)")
         }
@@ -152,7 +167,18 @@ public class EAAnimationDelayed: Equatable, Printable {
     
     private func animationCompleted(finished: Bool) {
         
+        //animation's own completion
         self.completion?(finished)
+        
+        //chain has been cancelled
+        if let cancelCompletion = EAAnimationDelayed.cancelCompletions[identifier] {
+            if debug {
+                println("run chain cancel completion")
+            }
+            cancelCompletion()
+            detachFromChain()
+            return
+        }
         
         //check for .Repeat
         if finished && self.loopsChain {
@@ -184,6 +210,7 @@ public class EAAnimationDelayed: Equatable, Printable {
         if debug {
             println("animation #\(self.debugNumber)")
         }
+        self.identifier = NSUUID().UUIDString
     }
     
     deinit {
@@ -195,7 +222,7 @@ public class EAAnimationDelayed: Equatable, Printable {
     public var description: String {
         get {
             if debug {
-                return "animation #\(self.debugNumber) prev: \(self.prevDelayedAnimation?.debugNumber) next: \(self.nextDelayedAnimation?.debugNumber)"
+                return "animation #\(self.debugNumber) [\(self.identifier)] prev: \(self.prevDelayedAnimation?.debugNumber) next: \(self.nextDelayedAnimation?.debugNumber)"
             } else {
                 return "<EADelayedAnimation>"
             }
