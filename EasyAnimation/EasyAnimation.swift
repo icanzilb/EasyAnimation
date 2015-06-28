@@ -90,6 +90,7 @@ private let specializedLayerKeys: [String: [String]] = [
 ]
 
 public extension UIViewAnimationOptions {
+    //CA Fill modes
     static let FillModeNone = UIViewAnimationOptions(0)
     static let FillModeForwards = UIViewAnimationOptions(1024)
     static let FillModeBackwards = UIViewAnimationOptions(2048)
@@ -169,7 +170,6 @@ extension UIView {
         return result
     }
     
-    //TODO: bring in the fix for layer-only animation chains
     class func EA_animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         //create context
         let context = AnimationContext()
@@ -186,8 +186,17 @@ extension UIView {
         CATransaction.begin()
         CATransaction.setDisableActions(false)
         
+        var completionBlock: CompletionBlock? = nil
+        
         //spring animations
-        EA_animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
+        if let completion = completion {
+            //wrap a completion block
+            completionBlock = CompletionBlock(context: context, completion: completion)
+            EA_animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: completionBlock!.wrapCompletion)
+        } else {
+            //simply schedule the animation
+            EA_animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
+        }
         
         //pop context
         activeAnimationContexts.removeLast()
@@ -301,9 +310,9 @@ extension UIView {
         //options
         if let options = context.options?.rawValue {
             
-            anim.autoreverses = (options & UIViewAnimationOptions.Autoreverse.rawValue != 0)
-            if options & UIViewAnimationOptions.Repeat.rawValue != 0 {
-                anim.repeatCount = Float.infinity
+            if options & UIViewAnimationOptions.BeginFromCurrentState.rawValue == 0 { //only repeat if not in a chain
+                anim.autoreverses = (options & UIViewAnimationOptions.Autoreverse.rawValue == UIViewAnimationOptions.Autoreverse.rawValue)
+                anim.repeatCount = (options & UIViewAnimationOptions.Repeat.rawValue == UIViewAnimationOptions.Repeat.rawValue) ? Float.infinity : 0
             }
             
             //easing
@@ -357,6 +366,39 @@ extension UIView {
         currentAnimation.options = options
         currentAnimation.animations = animations
         currentAnimation.completion = completion
+        
+        currentAnimation.nextDelayedAnimation = EAAnimationDelayed()
+        currentAnimation.nextDelayedAnimation!.prevDelayedAnimation = currentAnimation
+        currentAnimation.run()
+        
+        EAAnimationDelayed.animations.append(currentAnimation)
+        
+        return currentAnimation.nextDelayedAnimation!
+    }
+
+    /**
+    Creates and runs an animation which allows other animations to be chained to it and to each other.
+    
+    :param: duration The animation duration in seconds
+    :param: delay The delay before the animation starts
+    :param: usingSpringWithDamping the spring damping
+    :param: initialSpringVelocity initial velocity of the animation
+    :param: options A UIViewAnimationOptions bitmask (check UIView.animationWithDuration:delay:options:animations:completion: for more info)
+    :param: animations Animation closure
+    :param: completion Completion closure of type (Bool)->Void
+    
+    :returns: The created request.
+    */
+    public class func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        
+        let currentAnimation = EAAnimationDelayed()
+        currentAnimation.duration = duration
+        currentAnimation.delay = delay
+        currentAnimation.options = options
+        currentAnimation.animations = animations
+        currentAnimation.completion = completion
+        currentAnimation.springDamping = dampingRatio
+        currentAnimation.springVelocity = velocity
         
         currentAnimation.nextDelayedAnimation = EAAnimationDelayed()
         currentAnimation.nextDelayedAnimation!.prevDelayedAnimation = currentAnimation

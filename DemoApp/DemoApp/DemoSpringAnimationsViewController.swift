@@ -17,13 +17,13 @@ class DemoSpringAnimationsViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        down()
+        animate()
     }
     
-    func down() {
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: nil,
+    func animate() {
+        
+        UIView.animateAndChainWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: nil,
             animations: {
-                
                 //spring animate the view
                 self.redSquare.transform = CGAffineTransformConcat(
                     CGAffineTransformMakeRotation(CGFloat(M_PI_2)),
@@ -37,15 +37,7 @@ class DemoSpringAnimationsViewController: UIViewController {
                 )
                 self.blueSquare.layer.cornerRadius = 50.0
                 
-            }, completion: {_ in
-                if self.view.superview != nil {
-                    self.up()
-                }
-        })
-    }
-    
-    func up() {
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: nil,
+            }, completion: nil).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: .Repeat,
             animations: {
                 
                 //spring animate the view
@@ -55,11 +47,7 @@ class DemoSpringAnimationsViewController: UIViewController {
                 self.blueSquare.layer.transform = CATransform3DIdentity
                 self.blueSquare.layer.cornerRadius = 0.0
                 
-            }, completion: {_ in
-                if self.view.superview != nil {
-                    self.down()
-                }
-        })
+            }, completion: nil)
     }
     
 }

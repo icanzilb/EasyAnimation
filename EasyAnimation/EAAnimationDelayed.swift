@@ -175,13 +175,18 @@ public class EAAnimationDelayed: Equatable, Printable {
     }
     
     func run() {
+        if debug {
+            println("run animation #\(debugNumber)")
+        }
+        //TODO: Check if layer-only animations fire a proper completion block
         if let animations = animations {
+            let optionsChained = (self.options != nil) ? (self.options! | UIViewAnimationOptions.BeginFromCurrentState) : UIViewAnimationOptions.BeginFromCurrentState
             if self.springDamping > 0.0 {
                 //spring animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: self.options ?? nil, animations: animations, completion: self.animationCompleted)
+                UIView.animateWithDuration(self.duration, delay: self.delay, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: optionsChained, animations: animations, completion: self.animationCompleted)
             } else {
                 //basic animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, options: self.options ?? nil, animations: animations, completion: self.animationCompleted)
+                UIView.animateWithDuration(self.duration, delay: self.delay, options: optionsChained, animations: animations, completion: self.animationCompleted)
             }
         }
     }

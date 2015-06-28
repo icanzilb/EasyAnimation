@@ -10,8 +10,8 @@ import UIKit
 
 class DemoMultipleAnimationsViewController: UIViewController {
 
-    var viewCount = 0.0
-    let maxViews = 190.0
+    var viewCount: Int = 0
+    let maxViews: Int = 190
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -26,7 +26,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
         }
         
         let v = UIView(frame: CGRect(x: 50, y: 100, width: 100, height: 100))
-        v.backgroundColor = UIColor(hue: CGFloat(Double(self.view.subviews.count)/maxViews), saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        v.backgroundColor = UIColor(hue: CGFloat(Double(self.view.subviews.count)/Double(maxViews)), saturation: 1.0, brightness: 1.0, alpha: 1.0)
         v.layer.cornerRadius = 50.0
         view.addSubview(v)
         
@@ -42,7 +42,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
             v.center.x -= 200.0
         }, completion: nil)
         
-        self.title = "\(viewCount)"
+        self.title = "\(viewCount) views"
         
         delay(seconds: 0.10, {
             self.spawn()
@@ -52,7 +52,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        viewCount = 1000.0
+        viewCount = 1000
         
         for chain in EAAnimationDelayed.animations {
             chain.cancelAnimationChain()
