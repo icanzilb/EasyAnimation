@@ -1,8 +1,8 @@
 ![](etc/EA.png)
 
-#### ver 0.6 (beta)
+#### ver 0.7.0
 
-_This is still beta quality code - feel free to test, create issues, etc. The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
+_The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
 <table width="100%">
 <tr>
@@ -150,7 +150,7 @@ Chain Animations
 
 `animateWithDuration:animations:` is really handy but chaining one animation after another is a major pain (especially if we are talking about more than 2 animations).
 
-**EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations like this:
+**EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations. Use `animateWithDuration:animations` or any other method to create chained animations.
 
 <table width="100%">
 <th>EasyAnimation</th>
@@ -202,6 +202,16 @@ let chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0,
 <pre lang="Swift">
 chain.cancelAnimationChain()
 </pre>
+
+If you want to do some cleanup after the animation chain is cancelled provide a block of code to the `cancelAnimationChain` method:
+
+<pre lang="Swift">
+chain.cancelAnimationChain({
+  self.myView.center = initialPosition
+  //etc. etc.
+})
+</pre>
+
 
 The animation will not stop immediately but once it completes the current step of the chain it will stop and cancel all scheduled animations in this chain.
 
@@ -263,9 +273,11 @@ To Do
 * `.Autoreverse` for chain animations (if possible)
 * add support for keyframe animation along the path via a custom property
 * cool demos...
+* iOS9 - use new animation syntax, integrate the built-in `CASpringAnimation` class
 
 
 Version History
 ========
 
+* 0.7 - round of bug fixes and a number of improvements
 * 0.6 - first beta version
