@@ -138,7 +138,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     :param: completion completion closure
     */
     
-    public func cancelAnimationChain(completion: (()->Void)? = nil) {
+    public func cancelAnimationChain(completion completion: (()->Void)? = nil) {
         EAAnimationDelayed.cancelCompletions[identifier] = completion
         
         var link = self
