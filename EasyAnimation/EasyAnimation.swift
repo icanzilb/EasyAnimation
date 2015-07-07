@@ -274,24 +274,33 @@ extension UIView {
         
         if (context.springDamping > 0.0) {
             //create a layer spring animation
-            anim = RBBSpringAnimation(keyPath: pending.keyPath)
-            if let anim = anim as? RBBSpringAnimation {
-                
-                anim.from = pending.fromValue
-                anim.to = pending.layer.valueForKey(pending.keyPath)
-                
-                //TODO: refine the spring animation setup
-                //lotta magic numbers to mimic UIKit springs
-                let epsilon = 0.001
-                anim.damping = -2.0 * log(epsilon) / context.duration
-                anim.stiffness = Double(pow(anim.damping, 2)) / Double(pow(context.springDamping * 2, 2))
-                anim.mass = 1.0
-                anim.velocity = 0.0
-                
-                //NSLog("mass: %.2f", anim.mass)
-                //NSLog("damping: %.2f", anim.damping)
-                //NSLog("velocity: %.2f", anim.velocity)
-                //NSLog("stiffness: %.2f", anim.stiffness)
+
+            if #available(iOS 9, *) { // iOS9!
+                anim = CASpringAnimation(keyPath: pending.keyPath)
+                if let anim = anim as? CASpringAnimation {
+                    anim.fromValue = pending.fromValue
+                    anim.toValue = pending.layer.valueForKey(pending.keyPath)
+
+                    let epsilon = 0.001
+                    anim.damping = CGFloat(-2.0 * log(epsilon) / context.duration)
+                    anim.stiffness = CGFloat(pow(anim.damping, 2)) / CGFloat(pow(context.springDamping * 2, 2))
+                    anim.mass = 1.0
+                    anim.initialVelocity = 0.0
+                }
+            } else {
+                anim = RBBSpringAnimation(keyPath: pending.keyPath)
+                if let anim = anim as? RBBSpringAnimation {
+                    anim.from = pending.fromValue
+                    anim.to = pending.layer.valueForKey(pending.keyPath)
+                    
+                    //TODO: refine the spring animation setup
+                    //lotta magic numbers to mimic UIKit springs
+                    let epsilon = 0.001
+                    anim.damping = -2.0 * log(epsilon) / context.duration
+                    anim.stiffness = Double(pow(anim.damping, 2)) / Double(pow(context.springDamping * 2, 2))
+                    anim.mass = 1.0
+                    anim.velocity = 0.0
+                }
             }
         } else {
             //create property animation
