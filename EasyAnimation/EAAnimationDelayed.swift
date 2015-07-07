@@ -31,7 +31,7 @@ You do not need to create instances directly - they are created automatically wh
 animateWithDuration:animation: and the like.
 */
 
-public class EAAnimationDelayed: Equatable, Printable {
+public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     
     /* debug helpers */
     private var debug: Bool = false
@@ -41,7 +41,7 @@ public class EAAnimationDelayed: Equatable, Printable {
     /* animation properties */
     var duration: CFTimeInterval = 0.0
     var delay: CFTimeInterval = 0.0
-    var options: UIViewAnimationOptions? = nil
+    var options: UIViewAnimationOptions = []
     var animations: (() -> Void)?
     var completion: ((Bool) -> Void)?
     
@@ -70,14 +70,14 @@ public class EAAnimationDelayed: Equatable, Printable {
         EAAnimationDelayed.debugCount++
         self.debugNumber = EAAnimationDelayed.debugCount
         if debug {
-            println("animation #\(self.debugNumber)")
+            print("animation #\(self.debugNumber)")
         }
         self.identifier = NSUUID().UUIDString
     }
     
     deinit {
         if debug {
-            println("deinit \(self)")
+            print("deinit \(self)")
         }
     }
     
@@ -95,7 +95,7 @@ public class EAAnimationDelayed: Equatable, Printable {
     }
     
     public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        return animateWithDuration(duration, delay: delay, options: nil, animations: animations, completion: completion)
+        return animateWithDuration(duration, delay: delay, options: [], animations: animations, completion: completion)
     }
     
     public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
@@ -103,13 +103,18 @@ public class EAAnimationDelayed: Equatable, Printable {
     }
     
     public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        var anim = animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
+        let anim = animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
         self.springDamping = dampingRatio
         self.springVelocity = velocity
         return anim
     }
     
-    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, var options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        
+        if options.contains(.Repeat) {
+            options.remove(.Repeat)
+            loopsChain = true
+        }
         
         self.duration = duration
         self.delay = delay
@@ -117,16 +122,9 @@ public class EAAnimationDelayed: Equatable, Printable {
         self.animations = animations
         self.completion = completion
         
-        if let options = self.options?.rawValue {
-            if options & UIViewAnimationOptions.Repeat.rawValue != 0 {
-                self.options = UIViewAnimationOptions(rawValue: self.options!.rawValue & ~UIViewAnimationOptions.Repeat.rawValue)
-                self.loopsChain = true
-            }
-        }
-        
-        self.nextDelayedAnimation = EAAnimationDelayed()
-        self.nextDelayedAnimation!.prevDelayedAnimation = self
-        return self.nextDelayedAnimation!
+        nextDelayedAnimation = EAAnimationDelayed()
+        nextDelayedAnimation!.prevDelayedAnimation = self
+        return nextDelayedAnimation!
     }
     
     //MARK: - Animation control methods
@@ -151,7 +149,7 @@ public class EAAnimationDelayed: Equatable, Printable {
         link.detachFromChain()
         
         if debug {
-            println("cancelled top animation: \(link)")
+            print("cancelled top animation: \(link)")
         }
     }
     
@@ -159,14 +157,14 @@ public class EAAnimationDelayed: Equatable, Printable {
         self.nextDelayedAnimation = nil
         if let previous = self.prevDelayedAnimation {
             if debug {
-                println("dettach \(self)")
+                print("dettach \(self)")
             }
-            self.prevDelayedAnimation?.nextDelayedAnimation = nil
-            self.prevDelayedAnimation?.detachFromChain()
+            previous.nextDelayedAnimation = nil
+            previous.detachFromChain()
         } else {
-            if let index = find(EAAnimationDelayed.animations, self) {
+            if let index = EAAnimationDelayed.animations.indexOf(self) {
                 if debug {
-                    println("cancel root animation #\(EAAnimationDelayed.animations[index])")
+                    print("cancel root animation #\(EAAnimationDelayed.animations[index])")
                 }
                 EAAnimationDelayed.animations.removeAtIndex(index)
             }
@@ -176,17 +174,17 @@ public class EAAnimationDelayed: Equatable, Printable {
     
     func run() {
         if debug {
-            println("run animation #\(debugNumber)")
+            print("run animation #\(debugNumber)")
         }
         //TODO: Check if layer-only animations fire a proper completion block
         if let animations = animations {
-            let optionsChained = (self.options != nil) ? (self.options! | UIViewAnimationOptions.BeginFromCurrentState) : UIViewAnimationOptions.BeginFromCurrentState
+            options.insert(.BeginFromCurrentState)
             if self.springDamping > 0.0 {
                 //spring animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: optionsChained, animations: animations, completion: self.animationCompleted)
+                UIView.animateWithDuration(self.duration, delay: self.delay, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: options, animations: animations, completion: self.animationCompleted)
             } else {
                 //basic animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, options: optionsChained, animations: animations, completion: self.animationCompleted)
+                UIView.animateWithDuration(self.duration, delay: self.delay, options: options, animations: animations, completion: self.animationCompleted)
             }
         }
     }
@@ -199,7 +197,7 @@ public class EAAnimationDelayed: Equatable, Printable {
         //chain has been cancelled
         if let cancelCompletion = EAAnimationDelayed.cancelCompletions[identifier] {
             if debug {
-                println("run chain cancel completion")
+                print("run chain cancel completion")
             }
             cancelCompletion()
             detachFromChain()
@@ -214,7 +212,7 @@ public class EAAnimationDelayed: Equatable, Printable {
                 link = link.prevDelayedAnimation!
             }
             if debug {
-                println("loop to \(link)")
+                print("loop to \(link)")
             }
             link.run()
             return

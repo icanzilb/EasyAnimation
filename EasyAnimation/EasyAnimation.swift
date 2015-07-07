@@ -91,10 +91,10 @@ private let specializedLayerKeys: [String: [String]] = [
 
 public extension UIViewAnimationOptions {
     //CA Fill modes
-    static let FillModeNone = UIViewAnimationOptions(0)
-    static let FillModeForwards = UIViewAnimationOptions(1024)
-    static let FillModeBackwards = UIViewAnimationOptions(2048)
-    static let FillModeBoth = UIViewAnimationOptions(1024 + 2048)
+    static let FillModeNone = UIViewAnimationOptions(rawValue: 0)
+    static let FillModeForwards = UIViewAnimationOptions(rawValue: 1024)
+    static let FillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
+    static let FillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
 }
 
 /**
@@ -143,10 +143,10 @@ extension UIView {
         let result = EA_actionForLayer(layer, forKey: key)
         
         if let activeContext = activeAnimationContexts.last {
-            if let result = result as? NSNull {
+            if let _ = result as? NSNull {
                 
-                if contains(vanillaLayerKeys, key) ||
-                    (specializedLayerKeys[layer.classForCoder.description()] != nil && contains(specializedLayerKeys[layer.classForCoder.description()]!, key)) {
+                if vanillaLayerKeys.contains(key) ||
+                    (specializedLayerKeys[layer.classForCoder.description()] != nil && specializedLayerKeys[layer.classForCoder.description()]!.contains(key)) {
                         
                         var currentKeyValue: AnyObject? = layer.valueForKey(key)
                         
@@ -253,7 +253,7 @@ extension UIView {
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
-        animateWithDuration(duration, delay: 0.0, options: nil, animations: animations, completion: completion)
+        animateWithDuration(duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void) {
@@ -432,15 +432,15 @@ extension CALayer {
     public func EA_actionForKey(key: String!) -> CAAction! {
         
         //check if the layer has a view-delegate
-        if let delegate = delegate as? UIView {
+        if let _ = delegate as? UIView {
             return EA_actionForKey(key) // -> this passes the ball to UIView.actionForLayer:forKey:
         }
         
         //create a custom easy animation and add it to the animation stack
         if let activeContext = activeAnimationContexts.last where
-            contains(vanillaLayerKeys, key) ||
+            vanillaLayerKeys.contains(key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
-                    contains(specializedLayerKeys[self.classForCoder.description()]!, key)) {
+                    specializedLayerKeys[self.classForCoder.description()]!.contains(key)) {
                         
                         var currentKeyValue: AnyObject? = valueForKey(key)
                         

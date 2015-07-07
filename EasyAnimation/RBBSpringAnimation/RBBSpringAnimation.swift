@@ -15,7 +15,7 @@
 
 import UIKit
 
-class RBBSpringAnimation: CAKeyframeAnimation, NSCopying {
+class RBBSpringAnimation: CAKeyframeAnimation {
     
     var damping: Double = 0.01
     var velocity: Double = 0.0

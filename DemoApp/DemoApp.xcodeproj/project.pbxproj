@@ -11,7 +11,6 @@
 		9C2C93CC1ADBC44400C56262 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2C93CA1ADBC44400C56262 /* Main.storyboard */; };
 		9C2C93CE1ADBC44400C56262 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C2C93CD1ADBC44400C56262 /* Images.xcassets */; };
 		9C2C93D11ADBC44400C56262 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C2C93CF1ADBC44400C56262 /* LaunchScreen.xib */; };
-		9C2C93DD1ADBC44400C56262 /* DemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2C93DC1ADBC44400C56262 /* DemoAppTests.swift */; };
 		9C5B83BD1B148EA7008F2E79 /* EAAnimationDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5B83BC1B148EA7008F2E79 /* EAAnimationDelayed.swift */; };
 		9C9A05E11B13C3B80050DAEA /* RBBBlockBasedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A05DE1B13C3B80050DAEA /* RBBBlockBasedArray.swift */; };
 		9C9A05E21B13C3B80050DAEA /* RBBLinearInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A05DF1B13C3B80050DAEA /* RBBLinearInterpolation.swift */; };
@@ -23,16 +22,6 @@
 		9CFE78B61B0FE544006DBC7A /* EasyAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFE78B51B0FE544006DBC7A /* EasyAnimation.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9C2C93D71ADBC44400C56262 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9C2C93B91ADBC44400C56262 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9C2C93C01ADBC44400C56262;
-			remoteInfo = DemoApp;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		9C2C93C11ADBC44400C56262 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C2C93C51ADBC44400C56262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -40,9 +29,6 @@
 		9C2C93CB1ADBC44400C56262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9C2C93CD1ADBC44400C56262 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9C2C93D01ADBC44400C56262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		9C2C93D61ADBC44400C56262 /* DemoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C2C93DB1ADBC44400C56262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9C2C93DC1ADBC44400C56262 /* DemoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppTests.swift; sourceTree = "<group>"; };
 		9C5B83BC1B148EA7008F2E79 /* EAAnimationDelayed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EAAnimationDelayed.swift; sourceTree = "<group>"; };
 		9C9A05DE1B13C3B80050DAEA /* RBBBlockBasedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBBlockBasedArray.swift; sourceTree = "<group>"; };
 		9C9A05DF1B13C3B80050DAEA /* RBBLinearInterpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBLinearInterpolation.swift; sourceTree = "<group>"; };
@@ -62,13 +48,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9C2C93D31ADBC44400C56262 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,7 +56,6 @@
 			children = (
 				9CFE78B41B0FE544006DBC7A /* EasyAnimation */,
 				9C2C93C31ADBC44400C56262 /* DemoApp */,
-				9C2C93D91ADBC44400C56262 /* DemoAppTests */,
 				9C2C93C21ADBC44400C56262 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				9C2C93C11ADBC44400C56262 /* DemoApp.app */,
-				9C2C93D61ADBC44400C56262 /* DemoAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,23 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				9C2C93C51ADBC44400C56262 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9C2C93D91ADBC44400C56262 /* DemoAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				9C2C93DC1ADBC44400C56262 /* DemoAppTests.swift */,
-				9C2C93DA1ADBC44400C56262 /* Supporting Files */,
-			);
-			path = DemoAppTests;
-			sourceTree = "<group>";
-		};
-		9C2C93DA1ADBC44400C56262 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9C2C93DB1ADBC44400C56262 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -189,39 +149,18 @@
 			productReference = 9C2C93C11ADBC44400C56262 /* DemoApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9C2C93D51ADBC44400C56262 /* DemoAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9C2C93E31ADBC44400C56262 /* Build configuration list for PBXNativeTarget "DemoAppTests" */;
-			buildPhases = (
-				9C2C93D21ADBC44400C56262 /* Sources */,
-				9C2C93D31ADBC44400C56262 /* Frameworks */,
-				9C2C93D41ADBC44400C56262 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9C2C93D81ADBC44400C56262 /* PBXTargetDependency */,
-			);
-			name = DemoAppTests;
-			productName = DemoAppTests;
-			productReference = 9C2C93D61ADBC44400C56262 /* DemoAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		9C2C93B91ADBC44400C56262 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Underplot ltd.";
 				TargetAttributes = {
 					9C2C93C01ADBC44400C56262 = {
 						CreatedOnToolsVersion = 6.3;
-					};
-					9C2C93D51ADBC44400C56262 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = 9C2C93C01ADBC44400C56262;
 					};
 				};
 			};
@@ -239,7 +178,6 @@
 			projectRoot = "";
 			targets = (
 				9C2C93C01ADBC44400C56262 /* DemoApp */,
-				9C2C93D51ADBC44400C56262 /* DemoAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,13 +190,6 @@
 				9C2C93CC1ADBC44400C56262 /* Main.storyboard in Resources */,
 				9C2C93D11ADBC44400C56262 /* LaunchScreen.xib in Resources */,
 				9C2C93CE1ADBC44400C56262 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9C2C93D41ADBC44400C56262 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,23 +213,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9C2C93D21ADBC44400C56262 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9C2C93DD1ADBC44400C56262 /* DemoAppTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9C2C93D81ADBC44400C56262 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9C2C93C01ADBC44400C56262 /* DemoApp */;
-			targetProxy = 9C2C93D71ADBC44400C56262 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9C2C93CA1ADBC44400C56262 /* Main.storyboard */ = {
@@ -341,6 +256,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -407,6 +323,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.underplot.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -417,41 +334,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DemoApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.underplot.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		9C2C93E41ADBC44400C56262 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DemoAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
-			};
-			name = Debug;
-		};
-		9C2C93E51ADBC44400C56262 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DemoAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 			};
 			name = Release;
 		};
@@ -472,15 +356,6 @@
 			buildConfigurations = (
 				9C2C93E11ADBC44400C56262 /* Debug */,
 				9C2C93E21ADBC44400C56262 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9C2C93E31ADBC44400C56262 /* Build configuration list for PBXNativeTarget "DemoAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9C2C93E41ADBC44400C56262 /* Debug */,
-				9C2C93E51ADBC44400C56262 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

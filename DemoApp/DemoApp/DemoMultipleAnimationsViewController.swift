@@ -32,7 +32,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
         
         let duration = 5.0
         
-        UIView.animateAndChainWithDuration(duration, delay: 0.0, options: nil, animations: {
+        UIView.animateAndChainWithDuration(duration, delay: 0.0, options: [], animations: {
             v.center.y += 250.0
         }, completion: nil).animateWithDuration(duration, animations: {
             v.center.x += 200.0
@@ -44,7 +44,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
         
         self.title = "\(viewCount) views"
         
-        delay(seconds: 0.10, {
+        delay(seconds: 0.10, completion: {
             self.spawn()
         })
     }

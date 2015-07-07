@@ -68,7 +68,7 @@ class RBBInterpolator
         
         //other type?
         if let from: AnyObject = from as? AnyObject, let to: AnyObject = to as? AnyObject {
-            let result: RBBLinearInterpolation = {fraction in
+            let _: RBBLinearInterpolation = {fraction in
                 return (fraction < 0.5) ? from : to
             }
         }
@@ -82,7 +82,7 @@ class RBBInterpolator
             let fromCGColor = from as! CGColorRef
             let toCGColor = to as! CGColorRef
             
-            return self.RBBInterpolateUIColor(UIColor(CGColor: fromCGColor)!, to: UIColor(CGColor: toCGColor)!)
+            return self.RBBInterpolateUIColor(UIColor(CGColor: fromCGColor), to: UIColor(CGColor: toCGColor))
         }
         
         fatalError("Unknown type of animated property")

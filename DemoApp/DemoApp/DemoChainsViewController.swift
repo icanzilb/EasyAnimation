@@ -25,7 +25,7 @@ class DemoChainsViewController: UIViewController {
         
         // chain calls to animateWithDuration... to easily make animation sequences
         
-        chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0, options: nil, animations: {
+        chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0, options: [], animations: {
             
             self.redTopConstraint.constant += 150.0
             self.redSquare.layoutIfNeeded()
@@ -35,7 +35,7 @@ class DemoChainsViewController: UIViewController {
             self.redLeftConstraint.constant += 150.0
             self.redSquare.layoutIfNeeded()
                 
-        }).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: nil, animations: {
+        }).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: [], animations: {
             
             self.redSquare.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
             self.blueSquare.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI_2), 0.0, 0.0, 1.0)
@@ -55,7 +55,7 @@ class DemoChainsViewController: UIViewController {
             self.blueSquare.layer.transform = CATransform3DIdentity
 
             }, completion: {_ in
-                println("sequence finished - will loop from start")
+                print("sequence finished - will loop from start")
         })
         
     }
