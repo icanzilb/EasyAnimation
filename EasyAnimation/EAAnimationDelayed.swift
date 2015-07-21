@@ -179,12 +179,16 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         //TODO: Check if layer-only animations fire a proper completion block
         if let animations = animations {
             options.insert(.BeginFromCurrentState)
-            if self.springDamping > 0.0 {
-                //spring animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: options, animations: animations, completion: self.animationCompleted)
-            } else {
-                //basic animation
-                UIView.animateWithDuration(self.duration, delay: self.delay, options: options, animations: animations, completion: self.animationCompleted)
+            let animationDelay = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * self.delay ))
+            
+            dispatch_after(animationDelay, dispatch_get_main_queue()) {
+                if self.springDamping > 0.0 {
+                    //spring animation
+                    UIView.animateWithDuration(self.duration, delay: 0, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: self.options, animations: animations, completion: self.animationCompleted)
+                } else {
+                    //basic animation
+                    UIView.animateWithDuration(self.duration, delay: 0, options: self.options, animations: animations, completion: self.animationCompleted)
+                }
             }
         }
     }
