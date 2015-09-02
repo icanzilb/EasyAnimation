@@ -65,11 +65,11 @@ private class CompletionBlock {
             //if no layer animations DO call completion
             context.pendingAnimations.count == 0 ||
             
-            //skip every other call if no uikit and there are layer animations 
+            //skip every other call if no uikit and there are layer animations
             //(e.g. jump over the first immediate uikit call to completion)
             ++nrOfExecutions % 2 == 0 {
                 
-            completion(completed)
+                completion(completed)
         }
     }
 }
@@ -100,10 +100,10 @@ private let specializedLayerKeys: [String: [String]] = [
 
 public extension UIViewAnimationOptions {
     //CA Fill modes
-    static let FillModeNone = UIViewAnimationOptions(0)
-    static let FillModeForwards = UIViewAnimationOptions(1024)
-    static let FillModeBackwards = UIViewAnimationOptions(2048)
-    static let FillModeBoth = UIViewAnimationOptions(1024 + 2048)
+    static let FillModeNone = UIViewAnimationOptions(rawValue: 0)
+    static let FillModeForwards = UIViewAnimationOptions(rawValue: 1024)
+    static let FillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
+    static let FillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
 }
 
 /**
@@ -152,10 +152,10 @@ extension UIView {
         let result = EA_actionForLayer(layer, forKey: key)
         
         if let activeContext = activeAnimationContexts.last {
-            if let result = result as? NSNull {
+            if let _ = result as? NSNull {
                 
-                if contains(vanillaLayerKeys, key) ||
-                    (specializedLayerKeys[layer.classForCoder.description()] != nil && contains(specializedLayerKeys[layer.classForCoder.description()]!, key)) {
+                if vanillaLayerKeys.contains(key) ||
+                    (specializedLayerKeys[layer.classForCoder.description()] != nil && specializedLayerKeys[layer.classForCoder.description()]!.contains(key)) {
                         
                         var currentKeyValue: AnyObject? = layer.valueForKey(key)
                         
@@ -262,7 +262,7 @@ extension UIView {
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
-        animateWithDuration(duration, delay: 0.0, options: nil, animations: animations, completion: completion)
+        animateWithDuration(duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
     class func EA_animateWithDuration(duration: NSTimeInterval, animations: () -> Void) {
@@ -283,24 +283,33 @@ extension UIView {
         
         if (context.springDamping > 0.0) {
             //create a layer spring animation
-            anim = RBBSpringAnimation(keyPath: pending.keyPath)
-            if let anim = anim as? RBBSpringAnimation {
-                
-                anim.from = pending.fromValue
-                anim.to = pending.layer.valueForKey(pending.keyPath)
-                
-                //TODO: refine the spring animation setup
-                //lotta magic numbers to mimic UIKit springs
-                let epsilon = 0.001
-                anim.damping = -2.0 * log(epsilon) / context.duration
-                anim.stiffness = Double(pow(anim.damping, 2)) / Double(pow(context.springDamping * 2, 2))
-                anim.mass = 1.0
-                anim.velocity = 0.0
-                
-                //NSLog("mass: %.2f", anim.mass)
-                //NSLog("damping: %.2f", anim.damping)
-                //NSLog("velocity: %.2f", anim.velocity)
-                //NSLog("stiffness: %.2f", anim.stiffness)
+
+            if #available(iOS 9, *) { // iOS9!
+                anim = CASpringAnimation(keyPath: pending.keyPath)
+                if let anim = anim as? CASpringAnimation {
+                    anim.fromValue = pending.fromValue
+                    anim.toValue = pending.layer.valueForKey(pending.keyPath)
+
+                    let epsilon = 0.001
+                    anim.damping = CGFloat(-2.0 * log(epsilon) / context.duration)
+                    anim.stiffness = CGFloat(pow(anim.damping, 2)) / CGFloat(pow(context.springDamping * 2, 2))
+                    anim.mass = 1.0
+                    anim.initialVelocity = 0.0
+                }
+            } else {
+                anim = RBBSpringAnimation(keyPath: pending.keyPath)
+                if let anim = anim as? RBBSpringAnimation {
+                    anim.from = pending.fromValue
+                    anim.to = pending.layer.valueForKey(pending.keyPath)
+                    
+                    //TODO: refine the spring animation setup
+                    //lotta magic numbers to mimic UIKit springs
+                    let epsilon = 0.001
+                    anim.damping = -2.0 * log(epsilon) / context.duration
+                    anim.stiffness = Double(pow(anim.damping, 2)) / Double(pow(context.springDamping * 2, 2))
+                    anim.mass = 1.0
+                    anim.velocity = 0.0
+                }
             }
         } else {
             //create property animation
@@ -441,15 +450,15 @@ extension CALayer {
     public func EA_actionForKey(key: String!) -> CAAction! {
         
         //check if the layer has a view-delegate
-        if let delegate = delegate as? UIView {
+        if let _ = delegate as? UIView {
             return EA_actionForKey(key) // -> this passes the ball to UIView.actionForLayer:forKey:
         }
         
         //create a custom easy animation and add it to the animation stack
         if let activeContext = activeAnimationContexts.last where
-            contains(vanillaLayerKeys, key) ||
+            vanillaLayerKeys.contains(key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
-                    contains(specializedLayerKeys[self.classForCoder.description()]!, key)) {
+                    specializedLayerKeys[self.classForCoder.description()]!.contains(key)) {
                         
                         var currentKeyValue: AnyObject? = valueForKey(key)
                         

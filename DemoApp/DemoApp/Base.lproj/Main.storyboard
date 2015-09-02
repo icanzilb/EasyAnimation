@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="76Y-Sr-XbV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="76Y-Sr-XbV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -25,20 +26,23 @@
             </objects>
             <point key="canvasLocation" x="534" y="1025"/>
         </scene>
-        <!--Demos-->
+        <!--Easy Animation-->
         <scene sceneID="WtG-yc-2qZ">
             <objects>
-                <tableViewController id="zXb-JV-t3Z" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wwK-72-dPO">
+                <tableViewController title="Easy Animation" id="zXb-JV-t3Z" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wwK-72-dPO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="7RP-I8-nzI">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="mOM-5m-Moo">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mOM-5m-Moo" id="3xy-Zv-EVG">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mixing view and layer animations" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsc-ob-9yx">
@@ -54,8 +58,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="ExQ-hb-12H">
+                                        <rect key="frame" x="0.0" y="159" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ExQ-hb-12H" id="OFY-fl-nWV">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Spring animations for layers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gr9-Q7-QUs">
@@ -71,8 +77,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="pBr-DT-6Qq">
+                                        <rect key="frame" x="0.0" y="219" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pBr-DT-6Qq" id="Npq-kw-8Nz">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Animation sequences (chains)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vw1-1M-dRw">
@@ -88,8 +96,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="mzX-cx-HmM">
+                                        <rect key="frame" x="0.0" y="279" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mzX-cx-HmM" id="O9y-7s-k6M">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Multiple animations" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhe-hB-TKE">
@@ -112,7 +122,7 @@
                             <outlet property="delegate" destination="zXb-JV-t3Z" id="WSk-F0-dB0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Demos" id="mnF-Yy-spL"/>
+                    <navigationItem key="navigationItem" title="Easy Animation Demos" id="mnF-Yy-spL"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ywr-Fb-oTG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -269,7 +279,7 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">, options: .CurveEaseOut | .Repeat | .Autoreverse,
+                                        <string key="content">, options: [.CurveEaseOut, .Repeat, .Autoreverse],
     animations: { () -&gt; </string>
                                         <attributes>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
@@ -2231,7 +2241,7 @@ CgogICAgICAgIA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="13" name="Menlo-Regular"/>
@@ -3644,19 +3654,6 @@ CiAgICAgICAgA
                                     <constraint firstAttribute="width" constant="100" id="Shz-Sr-lFY"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHb-8T-kgB">
-                                <rect key="frame" x="85" y="342" width="151" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="151" id="pO7-f5-Ajl"/>
-                                    <constraint firstAttribute="height" constant="40" id="xk3-Cs-OtJ"/>
-                                </constraints>
-                                <state key="normal" title="Cancel Sequence">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="actionCancelSequence:" destination="8e6-lj-bbK" eventType="touchUpInside" id="3hx-Nd-Pks"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-TJ-cPs">
                                 <rect key="frame" x="0.0" y="382" width="320" height="186"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3780,7 +3777,7 @@ CiAgICAgICAgA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
@@ -4327,7 +4324,7 @@ CiAgICA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
@@ -5763,6 +5760,19 @@ CiAgICAgICAgA
                                     </mask>
                                 </variation>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHb-8T-kgB">
+                                <rect key="frame" x="85" y="342" width="151" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="151" id="pO7-f5-Ajl"/>
+                                    <constraint firstAttribute="height" constant="40" id="xk3-Cs-OtJ"/>
+                                </constraints>
+                                <state key="normal" title="Cancel Sequence">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionCancelSequence:" destination="8e6-lj-bbK" eventType="touchUpInside" id="3hx-Nd-Pks"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -5885,7 +5895,7 @@ CiAgICAgICAgA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
@@ -6342,6 +6352,11 @@ CiAgICAgICAgA
                                     </fragment>
                                 </attributedString>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -22,7 +22,7 @@ class DemoSpringAnimationsViewController: UIViewController {
     
     func animate() {
         
-        UIView.animateAndChainWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: nil,
+        UIView.animateAndChainWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: [],
             animations: {
                 //spring animate the view
                 self.redSquare.transform = CGAffineTransformConcat(

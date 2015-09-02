@@ -17,7 +17,7 @@ class DemoLayerViewAnimationsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         //animate the view and the layer
-        UIView.animateWithDuration(0.33, delay: 0.0, options: .CurveEaseOut | .Repeat | .Autoreverse,
+        UIView.animateWithDuration(0.33, delay: 0.0, options: [.CurveEaseOut, .Repeat, .Autoreverse],
             animations: { () -> Void in
                 
                 //view property animation
