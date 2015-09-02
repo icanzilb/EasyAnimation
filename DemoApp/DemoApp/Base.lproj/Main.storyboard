@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="534" y="1025"/>
         </scene>
-        <!--Demos-->
+        <!--Easy Animation-->
         <scene sceneID="WtG-yc-2qZ">
             <objects>
-                <tableViewController id="zXb-JV-t3Z" sceneMemberID="viewController">
+                <tableViewController title="Easy Animation" id="zXb-JV-t3Z" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wwK-72-dPO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,7 +122,7 @@
                             <outlet property="delegate" destination="zXb-JV-t3Z" id="WSk-F0-dB0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Demos" id="mnF-Yy-spL"/>
+                    <navigationItem key="navigationItem" title="Easy Animation Demos" id="mnF-Yy-spL"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ywr-Fb-oTG" userLabel="First Responder" sceneMemberID="firstResponder"/>
