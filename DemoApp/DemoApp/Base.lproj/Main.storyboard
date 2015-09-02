@@ -279,7 +279,7 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">, options: .CurveEaseOut | .Repeat | .Autoreverse,
+                                        <string key="content">, options: [.CurveEaseOut, .Repeat, .Autoreverse],
     animations: { () -&gt; </string>
                                         <attributes>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
@@ -2241,7 +2241,7 @@ CgogICAgICAgIA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="13" name="Menlo-Regular"/>
@@ -5895,7 +5895,7 @@ CiAgICAgICAgA
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="nil">
+                                    <fragment content="[]">
                                         <attributes>
                                             <color key="NSColor" red="0.70588235294117652" green="0.0" blue="0.3843137254901961" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="Menlo-Regular"/>
