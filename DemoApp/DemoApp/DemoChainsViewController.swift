@@ -67,7 +67,18 @@ class DemoChainsViewController: UIViewController {
             sender.enabled = false
         }
         
-        chain?.cancelAnimationChain()
+        chain!.cancelAnimationChain(completion: {
+            
+            self.redLeftConstraint.constant = 0
+            self.redTopConstraint.constant = 0
+            self.redSquare.transform = CGAffineTransformIdentity
+            self.blueTopConstraint.constant = 0
+            self.blueSquare.layer.transform  = CATransform3DIdentity
+
+            UIView.animateWithDuration(0.5, animations: {
+                self.view.layoutIfNeeded()
+            })
+        })
     }
     
 }
