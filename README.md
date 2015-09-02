@@ -30,6 +30,10 @@ Intro
 
 **EasyAnimation** extends what UIKit offers in terms of animations and makes your life much easier because you can do much more without learning some perky new syntax.
 
+### Versions
+
+Easy Animation 1.0+ is written in _Swift 2.0_. If you are looking for a Swift 1.2 version check [Easy Animation 0.7](https://github.com/icanzilb/EasyAnimation/releases/tag/0.7.0).
+
 <a name="layers"></a>
 Easy Layer Animations
 ========
