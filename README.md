@@ -1,6 +1,6 @@
 ![](etc/EA.png)
 
-#### ver 1.0.0
+#### ver 1.0.1
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
@@ -228,11 +228,13 @@ The animation will not stop immediately but once it completes the current step o
 Installation
 ========
 
-* To install the library via Cocoapods (recommended) add to your project's **Podfile**:
+* __Cocoapods__: Add to your project's **Podfile**:
 
 `pod 'EasyAnimation'`
 
-* To install with the source code - clone this repo or download the source code as a zip file. Include all files within the `EasyAnimation` folder into your project.
+* __Carthage__: I'm being told the repo supports now Carthage integration.
+
+* __Source code__: To install with the source code - clone this repo or download the source code as a zip file. Include all files within the `EasyAnimation` folder into your project.
 
 <a href="credit"></a>
 
