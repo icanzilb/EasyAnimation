@@ -443,8 +443,8 @@ extension CALayer {
     private static func replaceAnimationMethods() {
         //replace actionForKey
         method_exchangeImplementations(
-            class_getInstanceMethod(self, "actionForKey:"),
-            class_getInstanceMethod(self, "EA_actionForKey:"))
+            class_getInstanceMethod(self, Selector("actionForKey:")),
+            class_getInstanceMethod(self, Selector("EA_actionForKey:")))
     }
     
     public func EA_actionForKey(key: String!) -> CAAction! {
