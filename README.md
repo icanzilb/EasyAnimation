@@ -1,6 +1,6 @@
 ![](etc/EA.png)
 
-#### ver 1.0.1
+#### ver 1.0.2
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
@@ -67,6 +67,8 @@ Easy Layer Animations
 </table>
 
 ![](etc/moveX.gif)
+
+(OK, this example actually works fine also without EasyAnimation but I still keep it here for illustrative purpose)
 
 Or if you need to specify delay, animation options and/or animation curve:
 
@@ -286,6 +288,8 @@ To Do
 Version History
 ========
 
+* 1.0.2 - Fixes opengl view crashes for everyone
+* 1.0.1 - Bug fixes
 * 1.0 - Swift 2.0 and iOS9
 * 0.7 - round of bug fixes and a number of improvements
 * 0.6 - first beta version
