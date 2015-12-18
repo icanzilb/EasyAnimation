@@ -136,7 +136,7 @@ Here's how the code to create a spring animation for the layer position, transfo
     UIView.animateWithDuration(2.0, delay: 0.0, 
       usingSpringWithDamping: 0.25, 
       initialSpringVelocity: 0.0, 
-      options: nil, 
+      options: [], 
       animations: {
         self.view.layer.position.x += 200.0
         self.view.layer.cornerRadius = 50.0
@@ -166,7 +166,7 @@ Chain Animations
 <td valign="top">
 <pre lang="Swift">
     UIView.animateAndChainWithDuration(1.0, delay: 0.0, 
-      options: nil, animations: {
+      options: [], animations: {
         self.view.center.y += 100
     }, completion: nil).animateWithDuration(1.0, animations: {
         self.view.center.x += 100
@@ -203,7 +203,7 @@ If you have a repeating (or a normal) chain animation on screen you can cancel i
 
 <pre lang="Swift">
 let chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0,
-    options: nil, animations: {
+    options: [], animations: {
         self.square.center.y += 100
     }, completion: nil).animateWithDuration(1.0, animations: {
   [... the rest of the animations in the chain]
