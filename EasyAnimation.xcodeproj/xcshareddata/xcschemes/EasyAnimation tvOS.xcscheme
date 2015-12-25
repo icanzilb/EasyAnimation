@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "72A03EEA1C29784A002DA467"
-               BuildableName = "EasyAnimation tvOS.framework"
+               BuildableName = "EasyAnimation.framework"
                BlueprintName = "EasyAnimation tvOS"
                ReferencedContainer = "container:EasyAnimation.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "72A03EEA1C29784A002DA467"
-            BuildableName = "EasyAnimation tvOS.framework"
+            BuildableName = "EasyAnimation.framework"
             BlueprintName = "EasyAnimation tvOS"
             ReferencedContainer = "container:EasyAnimation.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "72A03EEA1C29784A002DA467"
-            BuildableName = "EasyAnimation tvOS.framework"
+            BuildableName = "EasyAnimation.framework"
             BlueprintName = "EasyAnimation tvOS"
             ReferencedContainer = "container:EasyAnimation.xcodeproj">
          </BuildableReference>
