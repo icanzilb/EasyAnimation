@@ -98,7 +98,7 @@ Or if you need to specify delay, animation options and/or animation curve:
 <td valign="top">
 <pre lang="Swift">
     UIView.animateWithDuration(2.0, delay: 2.0, 
-        options: .Repeat | .Autoreverse | .CurveEaseOut, 
+        options: [.Repeat, .Autoreverse, .CurveEaseOut], 
         animations: {
         self.view.layer.position.x += 200.0
 
