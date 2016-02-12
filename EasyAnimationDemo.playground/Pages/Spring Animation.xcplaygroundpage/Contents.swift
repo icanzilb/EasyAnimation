@@ -5,7 +5,6 @@ import UIKit
 import XCPlayground
 
 
-
 let containerRect = CGRectMake(0, 0, 400, 800)
 let containerView = UIView(frame: containerRect)
 containerView.backgroundColor = UIColor.whiteColor()
@@ -17,6 +16,7 @@ containerView.addSubview(redSquare)
 
 let blueSquare = UIView(frame: CGRectMake(250,100,100,100))
 blueSquare.backgroundColor = UIColor.blueColor()
+blueSquare.layer.borderColor = UIColor(white: 0.2, alpha: 1.0).CGColor
 containerView.addSubview(blueSquare)
 
 
@@ -34,9 +34,10 @@ func animate() {
             //spring animate the layer
             blueSquare.layer.transform = CATransform3DConcat(
                 CATransform3DMakeRotation(CGFloat(-M_PI_2), 0.0, 0.0, 1.0),
-                CATransform3DMakeScale(1.33, 1.33, 1.33)
+                CATransform3DMakeScale(1.5, 1.5, 1.5)
             )
             blueSquare.layer.cornerRadius = 50.0
+            blueSquare.layer.borderWidth = 0
             
         }, completion: nil).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: .Repeat,
             animations: {
@@ -47,6 +48,7 @@ func animate() {
                 //spring animate the layer
                 blueSquare.layer.transform = CATransform3DIdentity
                 blueSquare.layer.cornerRadius = 0.0
+                blueSquare.layer.borderWidth = 2
                 
             }, completion: nil)
 }
