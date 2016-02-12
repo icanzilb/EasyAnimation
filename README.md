@@ -230,7 +230,7 @@ The animation will not stop immediately but once it completes the current step o
 Installation
 ========
 
-* __Cocoapods__: Add to your project's **Podfile**:
+* __CocoaPods__: Add to your project's **Podfile**:
 
 `pod 'EasyAnimation'`
 
