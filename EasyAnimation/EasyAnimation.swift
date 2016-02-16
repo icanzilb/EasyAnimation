@@ -60,6 +60,8 @@ private class CompletionBlock {
     
     func wrapCompletion(completed: Bool) {
         // if no uikit animations uikit calls completion immediately
+        nrOfExecutions+=1
+        
         if context.nrOfUIKitAnimations > 0 ||
             
             //if no layer animations DO call completion
@@ -67,8 +69,8 @@ private class CompletionBlock {
             
             //skip every other call if no uikit and there are layer animations
             //(e.g. jump over the first immediate uikit call to completion)
-            ++nrOfExecutions % 2 == 0 {
-                
+            nrOfExecutions % 2 == 0 {
+            
                 completion(completed)
         }
     }
@@ -172,7 +174,7 @@ extension UIView {
                         }
                 }
             } else {
-                activeContext.nrOfUIKitAnimations++
+                activeContext.nrOfUIKitAnimations+=1
             }
         }
         

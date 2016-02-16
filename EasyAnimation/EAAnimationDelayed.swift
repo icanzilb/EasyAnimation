@@ -67,7 +67,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     //MARK: - Animation lifecycle
     
     init() {
-        EAAnimationDelayed.debugCount++
+        EAAnimationDelayed.debugCount += 1
         self.debugNumber = EAAnimationDelayed.debugCount
         if debug {
             print("animation #\(self.debugNumber)")

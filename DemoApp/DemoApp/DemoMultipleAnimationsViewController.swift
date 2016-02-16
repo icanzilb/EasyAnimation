@@ -20,7 +20,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
     }
 
     func spawn() {
-        viewCount++
+        viewCount += 1
         if viewCount > maxViews {
             return
         }
