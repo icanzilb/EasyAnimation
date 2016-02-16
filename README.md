@@ -1,6 +1,6 @@
 ![](<etc/EA.png>)
 
-#### ver 1.0.2
+#### ver 1.0.4
 
 *The library doesn't use any private APIs - apps using it should be fine for
 release on the App Store.*
