@@ -1,4 +1,5 @@
 ![](etc/EA.png)
+[![codebeat badge](https://codebeat.co/badges/c38fb300-ffcd-4b45-8ec8-085ec7fc77a7)](https://codebeat.co/projects/github-com-icanzilb-easyanimation)
 
 #### ver 1.0.4
 
