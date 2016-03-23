@@ -1,6 +1,6 @@
 ![](etc/EA.png)
 
-#### ver 1.0.4
+#### ver 1.0.5
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
@@ -287,8 +287,9 @@ To Do
 
 Version History
 ========
-* 1.0.4 - Swift 3 compatibily changes
-* 1.0.2 - Fixes opengl view crashes for everyone
+* 1.0.5 - Xcode 7.3 compatibility 
+* 1.0.4 - Swift 3 compatibility changes
+* 1.0.2 - Fixes openGL view crashes for everyone
 * 1.0.1 - Bug fixes
 * 1.0 - Swift 2.0 and iOS9
 * 0.7 - round of bug fixes and a number of improvements

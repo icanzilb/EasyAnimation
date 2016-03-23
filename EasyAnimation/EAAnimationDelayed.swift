@@ -109,7 +109,8 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         return anim
     }
     
-    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, var options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        var options = options
         
         if options.contains(.Repeat) {
             options.remove(.Repeat)
