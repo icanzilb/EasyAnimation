@@ -283,7 +283,7 @@ To Do
 * add `CALayer.animateWithDuration:animations:`.. for the people who want to use different methods for view and layer animations
 * `.Autoreverse` for chain animations (if possible)
 * add support for keyframe animation along the path via a custom property
-
+  * non swizzle version
 
 Version History
 ========
