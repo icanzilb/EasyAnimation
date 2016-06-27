@@ -46,7 +46,7 @@ class RBBSpringAnimation: CAKeyframeAnimation {
         let block: RBBBlockBasedArrayBlock = {index in
             return self.animationBlock(CGFloat(index) / 60.0, CGFloat(self.duration))
         }
-        result.setCount(Int(self.duration * 60), block: block)
+        result.setCount(count: Int(self.duration * 60), block: block)
         return result
     }()
     
@@ -123,15 +123,15 @@ class RBBSpringAnimation: CAKeyframeAnimation {
             };
         }
 
-        let lerp = RBBInterpolator.interpolate(self.from!, to: self.to!)
+        let lerp = RBBInterpolator.interpolate(from: self.from!, to: self.to!)
         let result: RBBAnimationBlock = {t, _ in
             return lerp(fraction: oscillation(t))
         }
         return result
     }
-    
-    override func copyWithZone(zone: NSZone) -> AnyObject {
-        let anim = super.copyWithZone(zone) as! RBBSpringAnimation
+
+    override func copy(with zone: NSZone?) -> AnyObject {
+        let anim = super.copy(with: zone) as! RBBSpringAnimation
 
         anim.damping = self.damping
         anim.velocity = self.velocity
