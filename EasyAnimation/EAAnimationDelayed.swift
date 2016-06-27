@@ -72,7 +72,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         if debug {
             print("animation #\(self.debugNumber)")
         }
-        self.identifier = NSUUID().UUIDString
+        self.identifier = NSUUID().uuidString
     }
     
     deinit {
@@ -90,30 +90,30 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     
     //MARK: Animation methods
     
-    public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void) -> EAAnimationDelayed {
-        return animateWithDuration(duration, animations: animations, completion: completion)
+    public func animateWithDuration(duration: TimeInterval, animations: () -> Void) -> EAAnimationDelayed {
+        return animateWithDuration(duration: duration, animations: animations, completion: completion)
     }
     
-    public func animateWithDuration(duration: NSTimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        return animateWithDuration(duration, delay: delay, options: [], animations: animations, completion: completion)
+    public func animateWithDuration(duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        return animateWithDuration(duration: duration, delay: delay, options: [], animations: animations, completion: completion)
     }
     
-    public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        return animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
+    public func animateWithDuration(duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        return animateAndChainWithDuration(duration: duration, delay: delay, options: options, animations: animations, completion: completion)
     }
     
-    public func animateWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        let anim = animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
+    public func animateWithDuration(duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+        let anim = animateAndChainWithDuration(duration: duration, delay: delay, options: options, animations: animations, completion: completion)
         self.springDamping = dampingRatio
         self.springVelocity = velocity
         return anim
     }
     
-    public func animateAndChainWithDuration(duration: NSTimeInterval, delay: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public func animateAndChainWithDuration(duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
         var options = options
         
-        if options.contains(.Repeat) {
-            options.remove(.Repeat)
+        if options.contains(.repeat) {
+            options.remove(.repeat)
             loopsChain = true
         }
         
@@ -139,7 +139,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     :param: completion completion closure
     */
     
-    public func cancelAnimationChain(completion completion: (()->Void)? = nil) {
+    public func cancelAnimationChain(completion: (()->Void)? = nil) {
         EAAnimationDelayed.cancelCompletions[identifier] = completion
         
         var link = self
@@ -163,11 +163,11 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
             previous.nextDelayedAnimation = nil
             previous.detachFromChain()
         } else {
-            if let index = EAAnimationDelayed.animations.indexOf(self) {
+            if let index = EAAnimationDelayed.animations.index(of: self) {
                 if debug {
                     print("cancel root animation #\(EAAnimationDelayed.animations[index])")
                 }
-                EAAnimationDelayed.animations.removeAtIndex(index)
+                EAAnimationDelayed.animations.remove(at: index)
             }
         }
         self.prevDelayedAnimation = nil
@@ -179,16 +179,16 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         }
         //TODO: Check if layer-only animations fire a proper completion block
         if let animations = animations {
-            options.insert(.BeginFromCurrentState)
-            let animationDelay = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * self.delay ))
-            
-            dispatch_after(animationDelay, dispatch_get_main_queue()) {
+            options.insert(.beginFromCurrentState)
+            let animationDelay :DispatchTime = DispatchTime.now() + Double(NSEC_PER_SEC) * self.delay;
+
+            DispatchQueue.main.after(when: animationDelay) {
                 if self.springDamping > 0.0 {
                     //spring animation
-                    UIView.animateWithDuration(self.duration, delay: 0, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: self.options, animations: animations, completion: self.animationCompleted)
+                    UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: self.options, animations: animations, completion: self.animationCompleted)
                 } else {
                     //basic animation
-                    UIView.animateWithDuration(self.duration, delay: 0, options: self.options, animations: animations, completion: self.animationCompleted)
+                    UIView.animate(withDuration: self.duration, delay: 0, options: self.options, animations: animations, completion: self.animationCompleted)
                 }
             }
         }

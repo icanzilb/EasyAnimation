@@ -35,7 +35,7 @@ class RBBBlockBasedArray: NSArray {
     }
     
     //will crash if block is not set
-    override func objectAtIndex(index: Int) -> AnyObject {
+    override func object(at index: Int) -> AnyObject {
         return block!(index)
     }
     

@@ -161,6 +161,9 @@
 				TargetAttributes = {
 					9C2C93C01ADBC44400C56262 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 34SWM7BPZ5;
+						DevelopmentTeamName = "Sensium Healthcare Limited";
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -325,6 +328,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.underplot.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -336,6 +340,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.underplot.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

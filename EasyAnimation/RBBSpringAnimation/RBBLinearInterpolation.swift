@@ -24,45 +24,45 @@ class RBBInterpolator
     {
         //Int
         if let from = from as? Int, let to = to as? Int {
-            return self.RBBInterpolateCGFloat(CGFloat(from), to: CGFloat(to))
+            return self.RBBInterpolateCGFloat(from: CGFloat(from), to: CGFloat(to))
         }
 
         //Double
         if let from = from as? Double, let to = to as? Double {
-            return self.RBBInterpolateCGFloat(CGFloat(from), to: CGFloat(to))
+            return self.RBBInterpolateCGFloat(from: CGFloat(from), to: CGFloat(to))
         }
         
         //CGFloat
         if let from = from as? CGFloat, let to = to as? CGFloat {
-            return self.RBBInterpolateCGFloat(from, to: to)
+            return self.RBBInterpolateCGFloat(from: from, to: to)
         }
 
         //UIColor
         if let from = from as? UIColor, let to = to as? UIColor {
-            return self.RBBInterpolateUIColor(from, to: to)
+            return self.RBBInterpolateUIColor(from: from, to: to)
         }
         
         //CGColorRef
-        
+
         //NSValue
         if let from = from as? NSValue, to = to as? NSValue {
-            let type = String.fromCString(from.objCType) ?? "" //should check to's type too?
+            let type = String(cString: from.objCType)
 
             //CGPoint
             if type.hasPrefix("{CGPoint") {
-                return self.RBBInterpolateCGPoint(from.CGPointValue(), to: to.CGPointValue())
+                return self.RBBInterpolateCGPoint(from: from.cgPointValue(), to: to.cgPointValue())
             }
             //CGSize
             if type.hasPrefix("{CGSize") {
-                return self.RBBInterpolateCGSize(from.CGSizeValue(), to: to.CGSizeValue())
+                return self.RBBInterpolateCGSize(from: from.cgSizeValue(), to: to.cgSizeValue())
             }
             //CGRect
             if type.hasPrefix("{CGRect") {
-                return self.RBBInterpolateCGRect(from.CGRectValue(), to: to.CGRectValue())
+                return self.RBBInterpolateCGRect(from: from.cgRectValue(), to: to.cgRectValue())
             }
             //CATransform3D
             if type.hasPrefix("{CATransform3D") {
-                return self.RBBInterpolateCATransform3D(from.CATransform3DValue, to: to.CATransform3DValue)
+                return self.RBBInterpolateCATransform3D(from: from.caTransform3DValue, to: to.caTransform3DValue)
             }
         }
         
@@ -77,12 +77,12 @@ class RBBInterpolator
         let fromRefType = CFGetTypeID(from as! CFTypeRef)
         let toRefType = CFGetTypeID(to as! CFTypeRef)
 
-        if fromRefType == CGColorGetTypeID() && toRefType == CGColorGetTypeID() {
+        if fromRefType == CGColor.typeID && toRefType == CGColor.typeID {
             //CGColor
-            let fromCGColor = from as! CGColorRef
-            let toCGColor = to as! CGColorRef
+            let fromCGColor = from as! CGColor
+            let toCGColor = to as! CGColor
             
-            return self.RBBInterpolateUIColor(UIColor(CGColor: fromCGColor), to: UIColor(CGColor: toCGColor))
+            return self.RBBInterpolateUIColor(from: UIColor(cgColor: fromCGColor), to: UIColor(cgColor: toCGColor))
         }
         
         fatalError("Unknown type of animated property")
@@ -129,7 +129,7 @@ class RBBInterpolator
                 m43: from.m43 + fraction * delta.m43,
                 m44: from.m44 + fraction * delta.m44)
             
-            return NSValue(CATransform3D: transform)
+            return NSValue(caTransform3D: transform)
         }
         
         return result
@@ -149,7 +149,7 @@ class RBBInterpolator
                 width: from.size.width + fraction * deltaWidth,
                 height: from.size.height + fraction * deltaHeight)
             
-            return NSValue(CGRect: rect)
+            return NSValue(cgRect: rect)
         }
         
         return result
@@ -166,7 +166,7 @@ class RBBInterpolator
                 y: from.y + fraction * deltaY
             )
             
-            return NSValue(CGPoint: point)
+            return NSValue(cgPoint: point)
         }
         
         return result
@@ -183,7 +183,7 @@ class RBBInterpolator
                 height: from.height + fraction * deltaHeight
             )
             
-            return NSValue(CGSize: size)
+            return NSValue(cgSize: size)
         }
         
         return result
@@ -227,7 +227,7 @@ class RBBInterpolator
             let brightness: CGFloat = fromBrightness + fraction * deltaBrightness
             let alpha: CGFloat = fromAlpha + fraction * deltaAlpha
             
-            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).CGColor
+            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
         }
         
         return result
