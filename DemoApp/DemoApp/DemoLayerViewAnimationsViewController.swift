@@ -13,24 +13,23 @@ class DemoLayerViewAnimationsViewController: UIViewController {
     @IBOutlet weak var redSquare: UIView!
     @IBOutlet weak var blueSquare: UIView!
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         //animate the view and the layer
-        UIView.animateWithDuration(0.33, delay: 0.0, options: [.CurveEaseOut, .Repeat, .Autoreverse],
+        UIView.animate(withDuration: 0.33, delay: 0.0, options: [.curveEaseOut, .repeat, .autoreverse],
             animations: { () -> Void in
                 
                 //view property animation
-                self.redSquare.transform = CGAffineTransformConcat(
-                    CGAffineTransformMakeScale(1.33, 1.5),
-                    CGAffineTransformMakeTranslation(0.0, 50.0)
+                self.redSquare.transform = CGAffineTransform(scaleX: 1.33, y: 1.5).concat(
+                    CGAffineTransform(translationX: 0.0, y: 50.0)
                     )
                 
                 //layer properties animations
                 self.blueSquare.layer.cornerRadius = 30.0
                 self.blueSquare.layer.borderWidth = 10.0
-                self.blueSquare.layer.borderColor = UIColor.blueColor().CGColor
-                self.blueSquare.layer.shadowColor = UIColor.grayColor().CGColor
+                self.blueSquare.layer.borderColor = UIColor.blue().cgColor
+                self.blueSquare.layer.shadowColor = UIColor.gray().cgColor
                 self.blueSquare.layer.shadowOffset = CGSize(width: 15.0, height: 15.0)
                 self.blueSquare.layer.shadowOpacity = 0.5
                 
