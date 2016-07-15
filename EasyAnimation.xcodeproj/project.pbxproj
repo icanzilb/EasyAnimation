@@ -169,11 +169,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = EasyAnimation;
 				TargetAttributes = {
 					403482531B8E01ED006C3C7C = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 29X3GG489T;
+						DevelopmentTeamName = "Bakken & Bæck AS";
+						LastSwiftMigration = 0800;
+					};
+					72A03EEA1C29784A002DA467 = {
+						DevelopmentTeam = 29X3GG489T;
+						DevelopmentTeamName = "Bakken & Bæck AS";
 					};
 				};
 			};
@@ -265,6 +272,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -344,8 +352,10 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.easyanimation.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -360,8 +370,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.easyanimation.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -376,6 +389,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.easyanimation.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EasyAnimation;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -395,9 +409,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.easyanimation.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EasyAnimation;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};

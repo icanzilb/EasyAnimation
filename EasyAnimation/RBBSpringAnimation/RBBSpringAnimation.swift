@@ -30,7 +30,7 @@ class RBBSpringAnimation: CAKeyframeAnimation {
     var mass: Double = 1.0
     var stiffness: Double = 0.0
     
-    private func durationForEpsilon(epsilon: Double) -> CFTimeInterval {
+    private func durationForEpsilon(_ epsilon: Double) -> CFTimeInterval {
         let beta = damping / (2 * mass)
         var duration: CFTimeInterval = 0
     
@@ -130,8 +130,8 @@ class RBBSpringAnimation: CAKeyframeAnimation {
         return result
     }
     
-    override func copyWithZone(zone: NSZone) -> AnyObject {
-        let anim = super.copyWithZone(zone) as! RBBSpringAnimation
+    override func copy(with zone: NSZone?) -> AnyObject {
+        let anim = super.copy(with: zone) as! RBBSpringAnimation
 
         anim.damping = self.damping
         anim.velocity = self.velocity
