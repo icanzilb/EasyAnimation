@@ -25,7 +25,7 @@ class RBBBlockBasedArray: NSArray {
     //can't do custom init because it's declared in an NSArray extension originally
     //and can't override it from here in Swift 1.2; need to do initialization from an ordinary method
     
-    func setCount(count: Int, block: RBBBlockBasedArrayBlock) {
+    func setCount(_ count: Int, block: RBBBlockBasedArrayBlock) {
         self.countBlockBased = count;
         self.block = block
     }
@@ -35,7 +35,7 @@ class RBBBlockBasedArray: NSArray {
     }
     
     //will crash if block is not set
-    override func objectAtIndex(index: Int) -> AnyObject {
+    override func object(at index: Int) -> AnyObject {
         return block!(index)
     }
     
