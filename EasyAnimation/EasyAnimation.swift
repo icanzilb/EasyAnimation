@@ -76,15 +76,21 @@ private class CompletionBlock {
     }
 }
 
-public class EasyAnimation {
+@objc public class EasyAnimation: NSObject {
     static private var activeAnimationContexts = [AnimationContext]()
 
-    static private let initialize: Void = UIView.replaceAnimationMethods()
-    static private var layersInitialize: Void = CALayer.replaceAnimationMethods()
-
-    static private let _disableSwizzling: Void = {
+    @objc override public class func initialize() {
+        #if !EANoSwizzling
         UIView.replaceAnimationMethods()
         CALayer.replaceAnimationMethods()
+        #endif
+    }
+
+    static private let _disableSwizzling: Void = {
+        #if !EANoSwizzling
+        UIView.replaceAnimationMethods()
+        CALayer.replaceAnimationMethods()
+        #endif
     }()
 
     public class func disableSwizzling() {
@@ -131,11 +137,12 @@ extension UIView {
     //public var animationPath: CGPath? { set {} get {return nil}}
     
     // MARK: UIView animation & action methods
-    
-    override public static func initialize() {
-        EasyAnimation.initialize
+
+    override public class func initialize() {
+        super.initialize()
+        _ = EasyAnimation()
     }
-    
+
     private static func replaceAnimationMethods() {
         //replace actionForLayer...
         method_exchangeImplementations(
@@ -441,12 +448,7 @@ extension UIView {
 
 extension CALayer {
     // MARK: CALayer animations
-    
-    override public static func initialize() {
-        super.initialize()
-        _ = EasyAnimation.layersInitialize
-    }
-    
+
     private static func replaceAnimationMethods() {
         //replace actionForKey
         method_exchangeImplementations(
