@@ -76,9 +76,21 @@ private class CompletionBlock {
     }
 }
 
-private var didEAInitialize = false
-private var didEAForLayersInitialize = false
-private var activeAnimationContexts = [AnimationContext]()
+public class EasyAnimation {
+    static private var activeAnimationContexts = [AnimationContext]()
+
+    static private let initialize: Void = UIView.replaceAnimationMethods()
+    static private var layersInitialize: Void = CALayer.replaceAnimationMethods()
+
+    static private let _disableSwizzling: Void = {
+        UIView.replaceAnimationMethods()
+        CALayer.replaceAnimationMethods()
+    }()
+
+    public class func disableSwizzling() {
+        _disableSwizzling
+    }
+}
 
 // MARK: EA animatable properties
 
@@ -121,10 +133,7 @@ extension UIView {
     // MARK: UIView animation & action methods
     
     override public static func initialize() {
-        if !didEAInitialize {
-            replaceAnimationMethods()
-            didEAInitialize = true
-        }
+        EasyAnimation.initialize
     }
     
     private static func replaceAnimationMethods() {
@@ -153,7 +162,7 @@ extension UIView {
         
         let result = EA_actionForLayer(layer, forKey: key)
         
-        if let activeContext = activeAnimationContexts.last {
+        if let activeContext = EasyAnimation.activeAnimationContexts.last {
             if let _ = result as? NSNull {
                 
                 if vanillaLayerKeys.contains(key) ||
@@ -191,7 +200,7 @@ extension UIView {
         context.springVelocity = velocity
         
         //push context
-        activeAnimationContexts.append(context)
+        EasyAnimation.activeAnimationContexts.append(context)
         
         //enable layer actions
         CATransaction.begin()
@@ -210,7 +219,7 @@ extension UIView {
         }
         
         //pop context
-        activeAnimationContexts.removeLast()
+        EasyAnimation.activeAnimationContexts.removeLast()
         
         //run pending animations
         for anim in context.pendingAnimations {
@@ -229,7 +238,7 @@ extension UIView {
         context.options = options
         
         //push context
-        activeAnimationContexts.append(context)
+        EasyAnimation.activeAnimationContexts.append(context)
         
         //enable layer actions
         CATransaction.begin()
@@ -248,7 +257,7 @@ extension UIView {
         }
         
         //pop context
-        activeAnimationContexts.removeLast()
+        EasyAnimation.activeAnimationContexts.removeLast()
         
         //run pending animations
         for anim in context.pendingAnimations {
@@ -435,11 +444,7 @@ extension CALayer {
     
     override public static func initialize() {
         super.initialize()
-        
-        if !didEAForLayersInitialize {
-            replaceAnimationMethods()
-            didEAForLayersInitialize = true
-        }
+        _ = EasyAnimation.layersInitialize
     }
     
     private static func replaceAnimationMethods() {
@@ -457,7 +462,7 @@ extension CALayer {
         }
         
         //create a custom easy animation and add it to the animation stack
-        if let activeContext = activeAnimationContexts.last,
+        if let activeContext = EasyAnimation.activeAnimationContexts.last,
             vanillaLayerKeys.contains(key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
                     specializedLayerKeys[self.classForCoder.description()]!.contains(key)) {
