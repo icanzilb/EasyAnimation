@@ -18,64 +18,64 @@ class DemoChainsViewController: UIViewController {
     
     @IBOutlet weak var blueTopConstraint: NSLayoutConstraint!
     
-    weak var chain: EAAnimationDelayed?
+    weak var chain: EAAnimationFuture?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // chain calls to animateWithDuration... to easily make animation sequences
         
-        chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0, options: [], animations: {
+        chain = UIView.animateAndChain(withDuration: 1.0, delay: 0.0, options: [], animations: {
             
             self.redTopConstraint.constant += 150.0
-            self.redSquare.layoutIfNeeded()
+            self.view.layoutIfNeeded()
             
-        }, completion: nil).animateWithDuration(1.0, animations: {
+        }, completion: nil).animate(withDuration: 1.0, animations: {
             
             self.redLeftConstraint.constant += 150.0
-            self.redSquare.layoutIfNeeded()
+            self.view.layoutIfNeeded()
                 
-        }).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: [], animations: {
+        }).animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: [], animations: {
             
-            self.redSquare.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+            self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
             self.blueSquare.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI_2), 0.0, 0.0, 1.0)
             
-        }, completion: nil).animateWithDuration(0.5, animations: {
+        }, completion: nil).animate(withDuration: 0.5, animations: {
             
             self.redTopConstraint.constant -= 150.0
             self.blueTopConstraint.constant -= 150.0
             self.view.layoutIfNeeded()
             
-        }).animateWithDuration(2.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: .Repeat, animations: {
+        }).animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: .repeat, animations: {
 
             self.redLeftConstraint.constant -= 150.0
             self.blueTopConstraint.constant += 150.0
             self.view.layoutIfNeeded()
-            self.redSquare.transform = CGAffineTransformIdentity
+            self.redSquare.transform = CGAffineTransform.identity
             self.blueSquare.layer.transform = CATransform3DIdentity
 
-            }, completion: {_ in
+        }, completion: {_ in
                 print("sequence finished - will loop from start")
         })
         
     }
 
-    @IBAction func actionCancelSequence(sender: AnyObject) {
+    @IBAction func actionCancelSequence(_ sender: AnyObject) {
         
         if let sender = sender as? UIButton {
-            sender.setTitle("Cancelled", forState: .Normal)
-            sender.enabled = false
+            sender.setTitle("Cancelled", for: UIControlState())
+            sender.isEnabled = false
         }
         
-        chain!.cancelAnimationChain(completion: {
+        chain!.cancelAnimationChain({
             
             self.redLeftConstraint.constant = 0
             self.redTopConstraint.constant = 0
-            self.redSquare.transform = CGAffineTransformIdentity
+            self.redSquare.transform = CGAffineTransform.identity
             self.blueTopConstraint.constant = 0
             self.blueSquare.layer.transform  = CATransform3DIdentity
 
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.view.layoutIfNeeded()
             })
         })

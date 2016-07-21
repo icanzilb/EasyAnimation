@@ -1,8 +1,8 @@
 //
-//  EAAnimationDelayed.swift
+//  EAAnimationFuture.swift
 //
 //  Created by Marin Todorov on 5/26/15.
-//  Copyright (c) 2015 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
 //
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +31,7 @@ You do not need to create instances directly - they are created automatically wh
 animateWithDuration:animation: and the like.
 */
 
-public class EAAnimationDelayed: Equatable, CustomStringConvertible {
+public class EAAnimationFuture: Equatable, CustomStringConvertible {
     
     /* debug helpers */
     private var debug: Bool = false
@@ -55,20 +55,20 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     private static var cancelCompletions: [String: ()->Void] = [:]
     
     /* animation chain links */
-    var prevDelayedAnimation: EAAnimationDelayed? {
+    var prevDelayedAnimation: EAAnimationFuture? {
         didSet {
             if let prev = prevDelayedAnimation {
                 identifier = prev.identifier
             }
         }
     }
-    var nextDelayedAnimation: EAAnimationDelayed?
+    var nextDelayedAnimation: EAAnimationFuture?
     
     //MARK: - Animation lifecycle
     
     init() {
-        EAAnimationDelayed.debugCount += 1
-        self.debugNumber = EAAnimationDelayed.debugCount
+        EAAnimationFuture.debugCount += 1
+        self.debugNumber = EAAnimationFuture.debugCount
         if debug {
             print("animation #\(self.debugNumber)")
         }
@@ -86,30 +86,35 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     the first link in each currently animating chain. Handy if you want to cancel all chains - just
     loop over `animations` and call `cancelAnimationChain` on each one.
     */
-    public static var animations: [EAAnimationDelayed] = []
+    public static var animations: [EAAnimationFuture] = []
     
     //MARK: Animation methods
     
-    public func animateWithDuration(_ duration: TimeInterval, animations: () -> Void) -> EAAnimationDelayed {
-        return animateWithDuration(duration, animations: animations, completion: completion)
+    @discardableResult
+    public func animate(withDuration duration: TimeInterval, animations: () -> Void) -> EAAnimationFuture {
+        return animate(withDuration: duration, animations: animations, completion: completion)
     }
-    
-    public func animateWithDuration(_ duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        return animateWithDuration(duration, delay: delay, options: [], animations: animations, completion: completion)
+
+    @discardableResult
+    public func animate(withDuration duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+        return animate(withDuration: duration, delay: delay, options: [], animations: animations, completion: completion)
     }
-    
-    public func animateWithDuration(_ duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        return animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
+
+    @discardableResult
+    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+        return animateAndChain(withDuration: duration, delay: delay, options: options, animations: animations, completion: completion)
     }
-    
-    public func animateWithDuration(_ duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
-        let anim = animateAndChainWithDuration(duration, delay: delay, options: options, animations: animations, completion: completion)
+
+    @discardableResult
+    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+        let anim = animateAndChain(withDuration: duration, delay: delay, options: options, animations: animations, completion: completion)
         self.springDamping = dampingRatio
         self.springVelocity = velocity
         return anim
     }
-    
-    public func animateAndChainWithDuration(_ duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+
+    @discardableResult
+    public func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         var options = options
         
         if options.contains(.repeat) {
@@ -123,7 +128,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         self.animations = animations
         self.completion = completion
         
-        nextDelayedAnimation = EAAnimationDelayed()
+        nextDelayedAnimation = EAAnimationFuture()
         nextDelayedAnimation!.prevDelayedAnimation = self
         return nextDelayedAnimation!
     }
@@ -139,8 +144,8 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     :param: completion completion closure
     */
     
-    public func cancelAnimationChain(completion: (()->Void)? = nil) {
-        EAAnimationDelayed.cancelCompletions[identifier] = completion
+    public func cancelAnimationChain(_ completion: (()->Void)? = nil) {
+        EAAnimationFuture.cancelCompletions[identifier] = completion
         
         var link = self
         while link.nextDelayedAnimation != nil {
@@ -163,11 +168,11 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
             previous.nextDelayedAnimation = nil
             previous.detachFromChain()
         } else {
-            if let index = EAAnimationDelayed.animations.index(of: self) {
+            if let index = EAAnimationFuture.animations.index(of: self) {
                 if debug {
-                    print("cancel root animation #\(EAAnimationDelayed.animations[index])")
+                    print("cancel root animation #\(EAAnimationFuture.animations[index])")
                 }
-                EAAnimationDelayed.animations.remove(at: index)
+                EAAnimationFuture.animations.remove(at: index)
             }
         }
         self.prevDelayedAnimation = nil
@@ -200,7 +205,7 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
         self.completion?(finished)
         
         //chain has been cancelled
-        if let cancelCompletion = EAAnimationDelayed.cancelCompletions[identifier] {
+        if let cancelCompletion = EAAnimationFuture.cancelCompletions[identifier] {
             if debug {
                 print("run chain cancel completion")
             }
@@ -244,6 +249,6 @@ public class EAAnimationDelayed: Equatable, CustomStringConvertible {
     }
 }
 
-public func == (lhs: EAAnimationDelayed , rhs: EAAnimationDelayed) -> Bool {
+public func == (lhs: EAAnimationFuture , rhs: EAAnimationFuture) -> Bool {
     return lhs === rhs
 }

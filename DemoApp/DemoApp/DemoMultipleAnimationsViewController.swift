@@ -13,7 +13,7 @@ class DemoMultipleAnimationsViewController: UIViewController {
     var viewCount: Int = 0
     let maxViews: Int = 190
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         spawn()
@@ -31,14 +31,14 @@ class DemoMultipleAnimationsViewController: UIViewController {
         view.addSubview(v)
         
         let duration = 5.0
-        
-        UIView.animateAndChainWithDuration(duration, delay: 0.0, options: [], animations: {
+
+        UIView.animateAndChain(withDuration: duration, delay: 0.0, options: [], animations: {
             v.center.y += 250.0
-        }, completion: nil).animateWithDuration(duration, animations: {
+            }, completion: nil).animate(withDuration: duration, animations: {
             v.center.x += 200.0
-        }).animateWithDuration(duration, animations: {
+            }).animate(withDuration: duration, animations: {
             v.center.y -= 250.0
-        }).animateWithDuration(duration, delay: 0.0, options: .Repeat, animations: {
+            }).animate(withDuration: duration, delay: 0.0, options: .repeat, animations: {
             v.center.x -= 200.0
         }, completion: nil)
         
@@ -49,12 +49,12 @@ class DemoMultipleAnimationsViewController: UIViewController {
         })
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         viewCount = 1000
         
-        for chain in EAAnimationDelayed.animations {
+        for chain in EAAnimationFuture.animations {
             chain.cancelAnimationChain()
         }
         

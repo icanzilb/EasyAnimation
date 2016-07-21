@@ -2,7 +2,7 @@
 //  EasyAnimation.swift
 //
 //  Created by Marin Todorov on 4/11/15.
-//  Copyright (c) 2015 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
 //
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -136,16 +136,16 @@ extension UIView {
         //replace animateWithDuration...
         method_exchangeImplementations(
             class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:))),
-            class_getClassMethod(self, #selector(UIView.EA_animateWithDuration(_:animations:))))
+            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:))))
         method_exchangeImplementations(
             class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animateWithDuration(_:animations:completion:))))
+            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:completion:))))
         method_exchangeImplementations(
             class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:options:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animateWithDuration(_:delay:options:animations:completion:))))
+            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:options:animations:completion:))))
         method_exchangeImplementations(
             class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animateWithDuration(_:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))))
+            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))))
         
     }
     
@@ -181,7 +181,7 @@ extension UIView {
         return result
     }
     
-    class func EA_animateWithDuration(_ duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         //create context
         let context = AnimationContext()
         context.duration = duration
@@ -203,10 +203,10 @@ extension UIView {
         if let completion = completion {
             //wrap a completion block
             completionBlock = CompletionBlock(context: context, completion: completion)
-            EA_animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: completionBlock!.wrapCompletion)
+            EA_animate(withDuration: duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: completionBlock!.wrapCompletion)
         } else {
             //simply schedule the animation
-            EA_animateWithDuration(duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
+            EA_animate(withDuration: duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
         }
         
         //pop context
@@ -220,7 +220,7 @@ extension UIView {
         CATransaction.commit()
     }
     
-    class func EA_animateWithDuration(_ duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         
         //create context
         let context = AnimationContext()
@@ -241,10 +241,10 @@ extension UIView {
         if let completion = completion {
             //wrap a completion block
             completionBlock = CompletionBlock(context: context, completion: completion)
-            EA_animateWithDuration(duration, delay: delay, options: options, animations: animations, completion: completionBlock!.wrapCompletion)
+            EA_animate(withDuration: duration, delay: delay, options: options, animations: animations, completion: completionBlock!.wrapCompletion)
         } else {
             //simply schedule the animation
-            EA_animateWithDuration(duration, delay: delay, options: options, animations: animations, completion: nil)
+            EA_animate(withDuration: duration, delay: delay, options: options, animations: animations, completion: nil)
         }
         
         //pop context
@@ -256,18 +256,18 @@ extension UIView {
         }
         
         //try a timer now, than see about animation delegate
-        if let completionBlock = completionBlock where context.nrOfUIKitAnimations == 0 && context.pendingAnimations.count > 0 {
+        if let completionBlock = completionBlock, context.nrOfUIKitAnimations == 0, context.pendingAnimations.count > 0 {
             Timer.scheduledTimer(timeInterval: context.duration, target: self, selector: #selector(UIView.EA_wrappedCompletionHandler(_:)), userInfo: completionBlock, repeats: false)
         }
         
         CATransaction.commit()
     }
     
-    class func EA_animateWithDuration(_ duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
         animate(withDuration: duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
-    class func EA_animateWithDuration(_ duration: TimeInterval, animations: () -> Void) {
+    class func EA_animate(withDuration duration: TimeInterval, animations: () -> Void) {
         animate(withDuration: duration, animations: animations, completion: nil)
     }
     
@@ -378,20 +378,20 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChainWithDuration(_ duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
-        let currentAnimation = EAAnimationDelayed()
+        let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
         currentAnimation.delay = delay
         currentAnimation.options = options
         currentAnimation.animations = animations
         currentAnimation.completion = completion
         
-        currentAnimation.nextDelayedAnimation = EAAnimationDelayed()
+        currentAnimation.nextDelayedAnimation = EAAnimationFuture()
         currentAnimation.nextDelayedAnimation!.prevDelayedAnimation = currentAnimation
         currentAnimation.run()
         
-        EAAnimationDelayed.animations.append(currentAnimation)
+        EAAnimationFuture.animations.append(currentAnimation)
         
         return currentAnimation.nextDelayedAnimation!
     }
@@ -409,9 +409,9 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChainWithDuration(_ duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationDelayed {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
-        let currentAnimation = EAAnimationDelayed()
+        let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
         currentAnimation.delay = delay
         currentAnimation.options = options
@@ -420,11 +420,11 @@ extension UIView {
         currentAnimation.springDamping = dampingRatio
         currentAnimation.springVelocity = velocity
         
-        currentAnimation.nextDelayedAnimation = EAAnimationDelayed()
+        currentAnimation.nextDelayedAnimation = EAAnimationFuture()
         currentAnimation.nextDelayedAnimation!.prevDelayedAnimation = currentAnimation
         currentAnimation.run()
         
-        EAAnimationDelayed.animations.append(currentAnimation)
+        EAAnimationFuture.animations.append(currentAnimation)
         
         return currentAnimation.nextDelayedAnimation!
     }
@@ -446,18 +446,18 @@ extension CALayer {
         //replace actionForKey
         method_exchangeImplementations(
             class_getInstanceMethod(self, #selector(CALayer.action(forKey:))),
-            class_getInstanceMethod(self, #selector(CALayer.EA_actionForKey)))
+            class_getInstanceMethod(self, #selector(CALayer.EA_action(forKey:))))
     }
     
-    public func EA_actionForKey(_ key: String!) -> CAAction! {
+    public func EA_action(forKey key: String!) -> CAAction! {
         
         //check if the layer has a view-delegate
         if let _ = delegate as? UIView {
-            return EA_actionForKey(key) // -> this passes the ball to UIView.actionForLayer:forKey:
+            return EA_action(forKey: key) // -> this passes the ball to UIView.actionForLayer:forKey:
         }
         
         //create a custom easy animation and add it to the animation stack
-        if let activeContext = activeAnimationContexts.last where
+        if let activeContext = activeAnimationContexts.last,
             vanillaLayerKeys.contains(key) ||
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
                     specializedLayerKeys[self.classForCoder.description()]!.contains(key)) {

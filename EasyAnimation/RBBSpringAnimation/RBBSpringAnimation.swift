@@ -10,7 +10,7 @@
 //  RBBSpringAnimation.swift
 //
 //  Swift intepretation of the Objective-C original by Marin Todorov
-//  Copyright (c) 2015 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
 //
 
 import UIKit

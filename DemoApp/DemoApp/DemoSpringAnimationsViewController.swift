@@ -14,7 +14,7 @@ class DemoSpringAnimationsViewController: UIViewController {
     @IBOutlet weak var redSquare: UIView!
     @IBOutlet weak var blueSquare: UIView!
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         animate()
@@ -22,12 +22,11 @@ class DemoSpringAnimationsViewController: UIViewController {
     
     func animate() {
         
-        UIView.animateAndChainWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: [],
+        UIView.animateAndChain(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: [],
             animations: {
                 //spring animate the view
-                self.redSquare.transform = CGAffineTransformConcat(
-                    CGAffineTransformMakeRotation(CGFloat(M_PI_2)),
-                    CGAffineTransformMakeScale(1.5, 1.5)
+                self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2)).concat(
+                    CGAffineTransform(scaleX: 1.5, y: 1.5)
                 )
                 
                 //spring animate the layer
@@ -37,11 +36,11 @@ class DemoSpringAnimationsViewController: UIViewController {
                 )
                 self.blueSquare.layer.cornerRadius = 50.0
                 
-            }, completion: nil).animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: .Repeat,
+            }, completion: nil).animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: .repeat,
             animations: {
                 
                 //spring animate the view
-                self.redSquare.transform = CGAffineTransformIdentity
+                self.redSquare.transform = CGAffineTransform.identity
                 
                 //spring animate the layer
                 self.blueSquare.layer.transform = CATransform3DIdentity
