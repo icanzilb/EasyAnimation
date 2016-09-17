@@ -50,7 +50,7 @@ class RBBSpringAnimation: CAKeyframeAnimation {
         return result
     }()
     
-    override var values: [AnyObject]! {
+    override var values: [Any]! {
         get {
             return blockArrayValues as [AnyObject]
         }
@@ -125,12 +125,13 @@ class RBBSpringAnimation: CAKeyframeAnimation {
 
         let lerp = RBBInterpolator.interpolate(self.from!, to: self.to!)
         let result: RBBAnimationBlock = {t, _ in
-            return lerp(fraction: oscillation(t))
+            return lerp(oscillation(t))
         }
         return result
     }
-    
-    override func copy(with zone: NSZone?) -> AnyObject {
+
+
+    override func copy(with zone: NSZone?) -> Any {
         let anim = super.copy(with: zone) as! RBBSpringAnimation
 
         anim.damping = self.damping

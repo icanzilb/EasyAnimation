@@ -15,7 +15,7 @@
 
 import UIKit
 
-typealias RBBLinearInterpolation = (fraction: CGFloat)->AnyObject
+typealias RBBLinearInterpolation = (_ fraction: CGFloat) -> AnyObject
 
 class RBBInterpolator
 {
@@ -46,19 +46,19 @@ class RBBInterpolator
         
         //NSValue
         if let from = from as? NSValue, let to = to as? NSValue {
-            let type = String(cString: from.objCType) ?? "" //should check to's type too?
+            let type = String(cString: from.objCType) //should check to's type too?
 
             //CGPoint
             if type.hasPrefix("{CGPoint") {
-                return self.RBBInterpolateCGPoint(from.cgPointValue(), to: to.cgPointValue())
+                return self.RBBInterpolateCGPoint(from.cgPointValue, to: to.cgPointValue)
             }
             //CGSize
             if type.hasPrefix("{CGSize") {
-                return self.RBBInterpolateCGSize(from.cgSizeValue(), to: to.cgSizeValue())
+                return self.RBBInterpolateCGSize(from.cgSizeValue, to: to.cgSizeValue)
             }
             //CGRect
             if type.hasPrefix("{CGRect") {
-                return self.RBBInterpolateCGRect(from.cgRectValue(), to: to.cgRectValue())
+                return self.RBBInterpolateCGRect(from.cgRectValue, to: to.cgRectValue)
             }
             //CATransform3D
             if type.hasPrefix("{CATransform3D") {
@@ -67,15 +67,13 @@ class RBBInterpolator
         }
         
         //other type?
-        if let from: AnyObject = from as? AnyObject, let to: AnyObject = to as? AnyObject {
-            let _: RBBLinearInterpolation = {fraction in
-                return (fraction < 0.5) ? from : to
-            }
+        let _: RBBLinearInterpolation = {fraction in
+            return ((fraction < 0.5) ? from : to) as AnyObject
         }
-        
+
         //core foundation
-        let fromRefType = CFGetTypeID(from as! CFTypeRef)
-        let toRefType = CFGetTypeID(to as! CFTypeRef)
+        let fromRefType = CFGetTypeID(from as CFTypeRef)
+        let toRefType = CFGetTypeID(to as CFTypeRef)
 
         if fromRefType == CGColor.typeID && toRefType == CGColor.typeID {
             //CGColor
@@ -194,7 +192,7 @@ class RBBInterpolator
         let delta = to - from
         
         let result: RBBLinearInterpolation = {fraction in
-            return from + fraction * delta
+            return (from + fraction * delta) as AnyObject
         }
         
         return result

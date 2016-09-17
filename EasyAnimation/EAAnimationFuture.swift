@@ -91,22 +91,22 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
     //MARK: Animation methods
     
     @discardableResult
-    public func animate(withDuration duration: TimeInterval, animations: () -> Void) -> EAAnimationFuture {
+    public func animate(withDuration duration: TimeInterval, animations: @escaping () -> Void) -> EAAnimationFuture {
         return animate(withDuration: duration, animations: animations, completion: completion)
     }
 
     @discardableResult
-    public func animate(withDuration duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public func animate(withDuration duration: TimeInterval, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         return animate(withDuration: duration, delay: delay, options: [], animations: animations, completion: completion)
     }
 
     @discardableResult
-    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         return animateAndChain(withDuration: duration, delay: delay, options: options, animations: animations, completion: completion)
     }
 
     @discardableResult
-    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public func animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         let anim = animateAndChain(withDuration: duration, delay: delay, options: options, animations: animations, completion: completion)
         self.springDamping = dampingRatio
         self.springVelocity = velocity
@@ -114,7 +114,7 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
     }
 
     @discardableResult
-    public func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         var options = options
         
         if options.contains(.repeat) {
@@ -187,7 +187,7 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
             options.insert(.beginFromCurrentState)
             let animationDelay = DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * self.delay )) / Double(NSEC_PER_SEC)
             
-            DispatchQueue.main.after(when: animationDelay) {
+            DispatchQueue.main.asyncAfter(deadline: animationDelay) {
                 if self.springDamping > 0.0 {
                     //spring animation
                     UIView.animate(withDuration: self.duration, delay: 0, usingSpringWithDamping: self.springDamping, initialSpringVelocity: self.springVelocity, options: self.options, animations: animations, completion: self.animationCompleted)

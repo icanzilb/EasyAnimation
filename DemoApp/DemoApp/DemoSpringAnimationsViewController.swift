@@ -25,9 +25,8 @@ class DemoSpringAnimationsViewController: UIViewController {
         UIView.animateAndChain(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.33, initialSpringVelocity: 0.0, options: [],
             animations: {
                 //spring animate the view
-                self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2)).concat(
-                    CGAffineTransform(scaleX: 1.5, y: 1.5)
-                )
+                self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
+                    .concatenating(CGAffineTransform(scaleX: 1.5, y: 1.5))
                 
                 //spring animate the layer
                 self.blueSquare.layer.transform = CATransform3DConcat(

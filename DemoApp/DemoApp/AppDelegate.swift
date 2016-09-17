@@ -8,21 +8,17 @@
 
 import UIKit
 
-func delay(seconds: Double, completion:()->()) {
+func delay(seconds: Double, completion:@escaping () -> Void) {
     let popTime = DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * seconds )) / Double(NSEC_PER_SEC)
-    
-    DispatchQueue.main.after(when: popTime) {
-        completion()
-    }
+    DispatchQueue.main.asyncAfter(deadline: popTime, execute: completion)
 }
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         return true
     }
 }

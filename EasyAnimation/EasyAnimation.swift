@@ -2,7 +2,7 @@
 //  EasyAnimation.swift
 //
 //  Created by Marin Todorov on 4/11/15.
-//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-present Underplot ltd. All rights reserved.
 //
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -53,7 +53,7 @@ private class CompletionBlock {
     var completion: ((Bool) -> Void)
     var nrOfExecutions: Int = 0
     
-    init(context c: AnimationContext, completion cb: (Bool) -> Void) {
+    init(context c: AnimationContext, completion cb: @escaping (Bool) -> Void) {
         context = c
         completion = cb
     }
@@ -77,7 +77,7 @@ private class CompletionBlock {
 }
 
 @objc public class EasyAnimation: NSObject {
-    static private var activeAnimationContexts = [AnimationContext]()
+    static fileprivate var activeAnimationContexts = [AnimationContext]()
 
     @objc override public class func initialize() {
         #if !EANoSwizzling
@@ -138,12 +138,12 @@ extension UIView {
     
     // MARK: UIView animation & action methods
 
-    override public class func initialize() {
+    override open class func initialize() {
         super.initialize()
         _ = EasyAnimation()
     }
 
-    private static func replaceAnimationMethods() {
+    fileprivate static func replaceAnimationMethods() {
         //replace actionForLayer...
         method_exchangeImplementations(
             class_getInstanceMethod(self, #selector(UIView.action(for:forKey:))),
@@ -175,17 +175,17 @@ extension UIView {
                 if vanillaLayerKeys.contains(key) ||
                     (specializedLayerKeys[layer.classForCoder.description()] != nil && specializedLayerKeys[layer.classForCoder.description()]!.contains(key)) {
                         
-                        var currentKeyValue: AnyObject? = layer.value(forKey: key)
+                        var currentKeyValue = layer.value(forKey: key)
                         
                         //exceptions
                         if currentKeyValue == nil && key.hasSuffix("Color") {
-                            currentKeyValue = UIColor.clear().cgColor
+                            currentKeyValue = UIColor.clear.cgColor
                         }
                         
                         //found an animatable property - add the pending animation
-                        if let currentKeyValue: AnyObject = currentKeyValue {
+                        if currentKeyValue != nil {
                             activeContext.pendingAnimations.append(
-                                PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue)
+                                PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue as AnyObject)
                             )
                         }
                 }
@@ -279,11 +279,11 @@ extension UIView {
         CATransaction.commit()
     }
     
-    class func EA_animate(withDuration duration: TimeInterval, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) {
         animate(withDuration: duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
-    class func EA_animate(withDuration duration: TimeInterval, animations: () -> Void) {
+    class func EA_animate(withDuration duration: TimeInterval, animations: @escaping () -> Void) {
         animate(withDuration: duration, animations: animations, completion: nil)
     }
     
@@ -394,7 +394,7 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
         let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
@@ -425,7 +425,7 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
         let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
@@ -449,7 +449,7 @@ extension UIView {
 extension CALayer {
     // MARK: CALayer animations
 
-    private static func replaceAnimationMethods() {
+    fileprivate static func replaceAnimationMethods() {
         //replace actionForKey
         method_exchangeImplementations(
             class_getInstanceMethod(self, #selector(CALayer.action(forKey:))),
@@ -469,17 +469,17 @@ extension CALayer {
                 (specializedLayerKeys[self.classForCoder.description()] != nil &&
                     specializedLayerKeys[self.classForCoder.description()]!.contains(key)) {
                         
-                        var currentKeyValue: AnyObject? = value(forKey: key)
+                        var currentKeyValue = value(forKey: key)
                         
                         //exceptions
                         if currentKeyValue == nil && key.hasSuffix("Color") {
-                            currentKeyValue = UIColor.clear().cgColor
+                            currentKeyValue = UIColor.clear.cgColor
                         }
                         
                         //found an animatable property - add the pending animation
-                        if let currentKeyValue: AnyObject = currentKeyValue {
+                        if currentKeyValue != nil {
                             activeContext.pendingAnimations.append(
-                                PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue
+                                PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue as AnyObject
                                 )
                             )
                         }

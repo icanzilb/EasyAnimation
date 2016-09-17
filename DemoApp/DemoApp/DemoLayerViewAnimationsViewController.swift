@@ -21,14 +21,14 @@ class DemoLayerViewAnimationsViewController: UIViewController {
             animations: { () -> Void in
                 
                 //view property animation
-                self.redSquare.transform = CGAffineTransform(scaleX: 1.33, y: 1.5).concat(CGAffineTransform(translationX: 0.0, y: 50.0)
-                    )
-                
+                self.redSquare.transform = CGAffineTransform(scaleX: 1.33, y: 1.5)
+                    .concatenating(CGAffineTransform(translationX: 0.0, y: 50.0))
+
                 //layer properties animations
                 self.blueSquare.layer.cornerRadius = 30.0
                 self.blueSquare.layer.borderWidth = 10.0
-                self.blueSquare.layer.borderColor = UIColor.blue().cgColor
-                self.blueSquare.layer.shadowColor = UIColor.gray().cgColor
+                self.blueSquare.layer.borderColor = UIColor.blue.cgColor
+                self.blueSquare.layer.shadowColor = UIColor.gray.cgColor
                 self.blueSquare.layer.shadowOffset = CGSize(width: 15.0, height: 15.0)
                 self.blueSquare.layer.shadowOpacity = 0.5
                 
