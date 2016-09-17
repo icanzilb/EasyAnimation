@@ -186,7 +186,7 @@ extension UIView {
                         }
                         
                         //found an animatable property - add the pending animation
-                        if currentKeyValue != nil {
+                        if let currentKeyValue = currentKeyValue {
                             activeContext.pendingAnimations.append(
                                 PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue)
                             )
@@ -271,6 +271,7 @@ extension UIView {
         
         //run pending animations
         for anim in context.pendingAnimations {
+            print("pending: \(anim.keyPath) from \(anim.fromValue) to \(anim.layer.value(forKeyPath: anim.keyPath))")
             anim.layer.add(EA_animation(anim, context: context), forKey: nil)
         }
         
@@ -480,7 +481,7 @@ extension CALayer {
                         }
                         
                         //found an animatable property - add the pending animation
-                        if currentKeyValue != nil {
+                        if let currentKeyValue = currentKeyValue {
                             activeContext.pendingAnimations.append(
                                 PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue
                                 )
