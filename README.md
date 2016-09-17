@@ -1,6 +1,6 @@
 ![](etc/EA.png)
 
-#### ver 1.0.5
+#### ver 1.1
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
@@ -32,13 +32,15 @@ Intro
 
 ### Versions
 
-Easy Animation 1.0+ is written in _Swift 2.0_. If you are looking for a Swift 1.2 version check [Easy Animation 0.7](https://github.com/icanzilb/EasyAnimation/releases/tag/0.7.0).
+Easy Animation is _Swift 3.0_. 
+
+If you are looking for a Swift 2 version check [Easy Animation 1.0.5](https://github.com/icanzilb/EasyAnimation/releases/tag/1.0.5).
 
 <a name="layers"></a>
 Easy Layer Animations
 ========
 
-**EasyAnimation** allows you to animate your layers straight from `animateWithDuration:animations:`. No more `CABasicAnimation` code for you. Just adjust the properties of your layers from within the `animations` block and **EasyAnimation** will take care of the rest:
+**EasyAnimation** allows you to animate your layers straight from `animate(duration:animations:...)`. No more `CABasicAnimation` code for you. Just adjust the properties of your layers from within the `animations` block and **EasyAnimation** will take care of the rest:
 <table width="100%">
 <th>CoreAnimation (before)</th>
 <tr>
@@ -58,7 +60,7 @@ Easy Layer Animations
 <tr>
 <td valign="top">
 <pre lang="Swift">
-    UIView.animateWithDuration(2.0, animations: {
+    UIView.animate(duration: 2.0, animations: {
         self.view.layer.position.x = 200.0
     })
 </pre>
@@ -97,8 +99,8 @@ Or if you need to specify delay, animation options and/or animation curve:
 <tr>
 <td valign="top">
 <pre lang="Swift">
-    UIView.animateWithDuration(2.0, delay: 2.0, 
-        options: [.Repeat, .Autoreverse, .CurveEaseOut], 
+    UIView.animate(duration: 2.0, delay: 2.0, 
+        options: [.repeat, .autoreverse, .curveEaseOut], 
         animations: {
         self.view.layer.position.x += 200.0
 
@@ -133,7 +135,7 @@ Here's how the code to create a spring animation for the layer position, transfo
 <tr>
 <td valign="top">
 <pre lang="Swift">
-    UIView.animateWithDuration(2.0, delay: 0.0, 
+    UIView.animate(duration: 2.0, delay: 0.0, 
       usingSpringWithDamping: 0.25, 
       initialSpringVelocity: 0.0, 
       options: [], 
@@ -156,23 +158,23 @@ Here's how the code to create a spring animation for the layer position, transfo
 Chain Animations
 ========
 
-`animateWithDuration:animations:` is really handy but chaining one animation after another is a major pain (especially if we are talking about more than 2 animations).
+`animate(duration:animations:..)` is really handy but chaining one animation after another is a major pain (especially if we are talking about more than 2 animations).
 
-**EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChainWithDuration:delay:options:animations:completion:` and then chain to it more animations. Use `animateWithDuration:animations` or any other method to create chained animations.
+**EasyAnimation** allows you to use a method to just chain two or more animations together.  Call `animateAndChain(duration:delay:options:animations:completion:)` and then chain to it more animations. Use `animate(duration:animations...)` or any other method to create chained animations.
 
 <table width="100%">
 <th>EasyAnimation</th>
 <tr>
 <td valign="top">
 <pre lang="Swift">
-    UIView.animateAndChainWithDuration(1.0, delay: 0.0, 
+    UIView.animateAndChain(duration: 1.0, delay: 0.0, 
       options: [], animations: {
         self.view.center.y += 100
-    }, completion: nil).animateWithDuration(1.0, animations: {
+    }, completion: nil).animate(duration: 1.0, animations: {
         self.view.center.x += 100
-    }).animateWithDuration(1.0, animations: {
+    }).animate(duration: 1.0, animations: {
         self.view.center.y -= 100
-    }).animateWithDuration(1.0, animations: {
+    }).animate(duration: 1.0, animations: {
         self.view.center.x -= 100
     })
 </pre>
@@ -186,13 +188,13 @@ Chain Animations
 
 This code will animate the view along a rectangular path - first downwards, then to the right, then up, then to the initial point where the animation started.
 
-What a perfect oportunity to repeat the animation and make the animation run continuosly! Add `options` parameter to the last `animateWithDuration...` in the chain and turn on the `.Repeat` option. 
+What a perfect oportunity to repeat the animation and make the animation run continuosly! Add `options` parameter to the last `animate(duration:...` in the chain and turn on the `.repeat` option. 
 
-This will make the whole chain (e.g. the 4 animations) repeat continuosly.
+This will make the whole chain (e.g. the 4 animations) repeat continuously.
 
 If you want to pause between any two animations in the chain - just use the `delay` parameter and it will all just work.
 
-**Note**: `animateAndChainWithDuration` does not create a serial queue to which you could add animations at any time. You schedule your animations once with one call like the example above and it runs on its own, you can't add or remove animations to and from the sequence.
+**Note**: `animateAndChain` does not create a serial queue to which you could add animations at any time. You schedule your animations once with one call like the example above and it runs on its own, you can't add or remove animations to and from the sequence.
 
 <a name="stop"></a>
 
@@ -202,10 +204,10 @@ Cancel Chain Animations
 If you have a repeating (or a normal) chain animation on screen you can cancel it at any time. Just grab hold of the animation object and call `cancelAnimationChain` on it any time you want.
 
 <pre lang="Swift">
-let chain = UIView.animateAndChainWithDuration(1.0, delay: 0.0,
+let chain = UIView.animateAndChain(duration: 1.0, delay: 0.0,
     options: [], animations: {
         self.square.center.y += 100
-    }, completion: nil).animateWithDuration(1.0, animations: {
+    }, completion: nil).animate(duration: 1.0, animations: {
   [... the rest of the animations in the chain]
 </pre>
 
@@ -234,7 +236,7 @@ Installation
 
 `pod 'EasyAnimation'`
 
-* __Carthage__: I'm being told the repo supports now Carthage integration.
+* __Carthage__: If you can help with Cartage support let me know.
 
 * __Source code__: To install with the source code - clone this repo or download the source code as a zip file. Include all files within the `EasyAnimation` folder into your project.
 
@@ -280,13 +282,12 @@ License
 To Do
 =========
 
-* add `CALayer.animateWithDuration:animations:`.. for the people who want to use different methods for view and layer animations
-* `.Autoreverse` for chain animations (if possible)
+* `.autoreverse` for chain animations (if possible)
 * add support for keyframe animation along the path via a custom property
-  * non swizzle version
-
+  
 Version History
 ========
+ * 1.1 - Xcode 8
 * 1.0.5 - Xcode 7.3 compatibility 
 * 1.0.4 - Swift 3 compatibility changes
 * 1.0.2 - Fixes openGL view crashes for everyone
