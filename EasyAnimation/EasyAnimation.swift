@@ -31,7 +31,7 @@ import ObjectiveC
 private struct PendingAnimation {
     let layer: CALayer
     let keyPath: String
-    let fromValue: AnyObject
+    let fromValue: Any
 }
 
 private class AnimationContext {
@@ -79,6 +79,9 @@ private class CompletionBlock {
 @objc public class EasyAnimation: NSObject {
     static fileprivate var activeAnimationContexts = [AnimationContext]()
 
+    @discardableResult
+    override init() {}
+
     @objc override public class func initialize() {
         #if !EANoSwizzling
         UIView.replaceAnimationMethods()
@@ -120,10 +123,10 @@ private let specializedLayerKeys: [String: [String]] = [
 
 public extension UIViewAnimationOptions {
     //CA Fill modes
-    static let FillModeNone = UIViewAnimationOptions(rawValue: 0)
-    static let FillModeForwards = UIViewAnimationOptions(rawValue: 1024)
-    static let FillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
-    static let FillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
+    static let fillModeNone = UIViewAnimationOptions(rawValue: 0)
+    static let fillModeForwards = UIViewAnimationOptions(rawValue: 1024)
+    static let fillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
+    static let fillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
 }
 
 /**
@@ -140,7 +143,7 @@ extension UIView {
 
     override open class func initialize() {
         super.initialize()
-        _ = EasyAnimation()
+        EasyAnimation()
     }
 
     fileprivate static func replaceAnimationMethods() {
@@ -166,7 +169,7 @@ extension UIView {
     }
     
     func EA_actionForLayer(_ layer: CALayer!, forKey key: String!) -> CAAction! {
-        
+
         let result = EA_actionForLayer(layer, forKey: key)
         
         if let activeContext = EasyAnimation.activeAnimationContexts.last {
@@ -185,7 +188,7 @@ extension UIView {
                         //found an animatable property - add the pending animation
                         if currentKeyValue != nil {
                             activeContext.pendingAnimations.append(
-                                PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue as AnyObject)
+                                PendingAnimation(layer: layer, keyPath: key, fromValue: currentKeyValue)
                             )
                         }
                 }
@@ -366,13 +369,13 @@ extension UIView {
             anim.timingFunction = CAMediaTimingFunction(name: timingFunctionName)
             
             //fill mode
-            if options & UIViewAnimationOptions.FillModeBoth.rawValue == UIViewAnimationOptions.FillModeBoth.rawValue {
+            if options & UIViewAnimationOptions.fillModeBoth.rawValue == UIViewAnimationOptions.fillModeBoth.rawValue {
                 //both
                 anim.fillMode = kCAFillModeBoth
-            } else if options & UIViewAnimationOptions.FillModeForwards.rawValue == UIViewAnimationOptions.FillModeForwards.rawValue {
+            } else if options & UIViewAnimationOptions.fillModeForwards.rawValue == UIViewAnimationOptions.fillModeForwards.rawValue {
                 //forward
                 anim.fillMode = (anim.fillMode == kCAFillModeBackwards) ? kCAFillModeBoth : kCAFillModeForwards
-            } else if options & UIViewAnimationOptions.FillModeBackwards.rawValue == UIViewAnimationOptions.FillModeBackwards.rawValue {
+            } else if options & UIViewAnimationOptions.fillModeBackwards.rawValue == UIViewAnimationOptions.fillModeBackwards.rawValue {
                 //backwards
                 anim.fillMode = kCAFillModeBackwards
             }
@@ -479,7 +482,7 @@ extension CALayer {
                         //found an animatable property - add the pending animation
                         if currentKeyValue != nil {
                             activeContext.pendingAnimations.append(
-                                PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue as AnyObject
+                                PendingAnimation(layer: self, keyPath: key, fromValue: currentKeyValue
                                 )
                             )
                         }

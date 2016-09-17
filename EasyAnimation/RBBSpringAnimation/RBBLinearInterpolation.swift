@@ -15,7 +15,7 @@
 
 import UIKit
 
-typealias RBBLinearInterpolation = (_ fraction: CGFloat) -> AnyObject
+typealias RBBLinearInterpolation = (_ fraction: CGFloat) -> Any
 
 class RBBInterpolator
 {

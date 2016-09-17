@@ -25,7 +25,7 @@ class RBBSpringAnimation: CAKeyframeAnimation {
     
     var allowsOverdamping: Bool = true
     
-    typealias RBBAnimationBlock = (CGFloat, CGFloat) -> AnyObject //(t, duration)
+    typealias RBBAnimationBlock = (CGFloat, CGFloat) -> Any //(t, duration)
     
     var mass: Double = 1.0
     var stiffness: Double = 0.0
@@ -52,7 +52,7 @@ class RBBSpringAnimation: CAKeyframeAnimation {
     
     override var values: [Any]! {
         get {
-            return blockArrayValues as [AnyObject]
+            return blockArrayValues.asAnys()
         }
         set {
             //no storage for this property

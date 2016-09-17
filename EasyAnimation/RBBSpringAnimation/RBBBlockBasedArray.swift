@@ -15,7 +15,7 @@
 
 import Foundation
 
-typealias RBBBlockBasedArrayBlock = (Int) -> AnyObject
+typealias RBBBlockBasedArrayBlock = (Int) -> Any
 
 class RBBBlockBasedArray: NSArray {
     
@@ -38,5 +38,9 @@ class RBBBlockBasedArray: NSArray {
 
     override func object(at index: Int) -> Any {
         return block!(index)
+    }
+
+    func asAnys() -> [Any] {
+        return map {$0 as Any}
     }
 }
