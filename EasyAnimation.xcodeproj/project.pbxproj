@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4034825A1B8E01ED006C3C7C /* EasyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 403482591B8E01ED006C3C7C /* EasyAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		403482771B8E024F006C3C7C /* EAAnimationDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482701B8E024F006C3C7C /* EAAnimationDelayed.swift */; };
+		403482771B8E024F006C3C7C /* EAAnimationFuture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482701B8E024F006C3C7C /* EAAnimationFuture.swift */; };
 		403482781B8E024F006C3C7C /* EasyAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482711B8E024F006C3C7C /* EasyAnimation.swift */; };
 		403482791B8E024F006C3C7C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 403482731B8E024F006C3C7C /* LICENSE */; };
 		4034827A1B8E024F006C3C7C /* RBBBlockBasedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482741B8E024F006C3C7C /* RBBBlockBasedArray.swift */; };
@@ -17,7 +17,7 @@
 		72A03EEC1C29784A002DA467 /* RBBLinearInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482751B8E024F006C3C7C /* RBBLinearInterpolation.swift */; };
 		72A03EED1C29784A002DA467 /* RBBSpringAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482761B8E024F006C3C7C /* RBBSpringAnimation.swift */; };
 		72A03EEE1C29784A002DA467 /* EasyAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482711B8E024F006C3C7C /* EasyAnimation.swift */; };
-		72A03EEF1C29784A002DA467 /* EAAnimationDelayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482701B8E024F006C3C7C /* EAAnimationDelayed.swift */; };
+		72A03EEF1C29784A002DA467 /* EAAnimationFuture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482701B8E024F006C3C7C /* EAAnimationFuture.swift */; };
 		72A03EF01C29784A002DA467 /* RBBBlockBasedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403482741B8E024F006C3C7C /* RBBBlockBasedArray.swift */; };
 		72A03EF31C29784A002DA467 /* EasyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 403482591B8E01ED006C3C7C /* EasyAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		72A03EF51C29784A002DA467 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 403482731B8E024F006C3C7C /* LICENSE */; };
@@ -27,7 +27,7 @@
 		403482541B8E01ED006C3C7C /* EasyAnimation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EasyAnimation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		403482581B8E01ED006C3C7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		403482591B8E01ED006C3C7C /* EasyAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EasyAnimation.h; sourceTree = "<group>"; };
-		403482701B8E024F006C3C7C /* EAAnimationDelayed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EAAnimationDelayed.swift; sourceTree = "<group>"; };
+		403482701B8E024F006C3C7C /* EAAnimationFuture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EAAnimationFuture.swift; sourceTree = "<group>"; };
 		403482711B8E024F006C3C7C /* EasyAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyAnimation.swift; sourceTree = "<group>"; };
 		403482731B8E024F006C3C7C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		403482741B8E024F006C3C7C /* RBBBlockBasedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBBBlockBasedArray.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		403482561B8E01ED006C3C7C /* EasyAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				403482701B8E024F006C3C7C /* EAAnimationDelayed.swift */,
+				403482701B8E024F006C3C7C /* EAAnimationFuture.swift */,
 				403482711B8E024F006C3C7C /* EasyAnimation.swift */,
 				403482721B8E024F006C3C7C /* RBBSpringAnimation */,
 				403482591B8E01ED006C3C7C /* EasyAnimation.h */,
@@ -174,7 +174,6 @@
 				TargetAttributes = {
 					403482531B8E01ED006C3C7C = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 29X3GG489T;
 						DevelopmentTeamName = "Bakken & Bæck AS";
 						LastSwiftMigration = 0800;
 					};
@@ -229,7 +228,7 @@
 				4034827B1B8E024F006C3C7C /* RBBLinearInterpolation.swift in Sources */,
 				4034827C1B8E024F006C3C7C /* RBBSpringAnimation.swift in Sources */,
 				403482781B8E024F006C3C7C /* EasyAnimation.swift in Sources */,
-				403482771B8E024F006C3C7C /* EAAnimationDelayed.swift in Sources */,
+				403482771B8E024F006C3C7C /* EAAnimationFuture.swift in Sources */,
 				4034827A1B8E024F006C3C7C /* RBBBlockBasedArray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,7 +240,7 @@
 				72A03EEC1C29784A002DA467 /* RBBLinearInterpolation.swift in Sources */,
 				72A03EED1C29784A002DA467 /* RBBSpringAnimation.swift in Sources */,
 				72A03EEE1C29784A002DA467 /* EasyAnimation.swift in Sources */,
-				72A03EEF1C29784A002DA467 /* EAAnimationDelayed.swift in Sources */,
+				72A03EEF1C29784A002DA467 /* EAAnimationFuture.swift in Sources */,
 				72A03EF01C29784A002DA467 /* RBBBlockBasedArray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -363,6 +363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
