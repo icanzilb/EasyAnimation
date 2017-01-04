@@ -1,5 +1,10 @@
 ![](etc/EA.png)
 
+[![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+[![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+[![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
+
 #### ver 1.1
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
