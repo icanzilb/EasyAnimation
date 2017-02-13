@@ -127,6 +127,10 @@ public extension UIViewAnimationOptions {
     static let fillModeForwards = UIViewAnimationOptions(rawValue: 1024)
     static let fillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
     static let fillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
+    
+    //CA Remove on completion
+    static let isRemovedOnCompletion = UIViewAnimationOptions(rawValue: 0)
+    static let isNotRemovedOnCompletion = UIViewAnimationOptions(rawValue: 16384)
 }
 
 /**
@@ -378,6 +382,13 @@ extension UIView {
             } else if options & UIViewAnimationOptions.fillModeBackwards.rawValue == UIViewAnimationOptions.fillModeBackwards.rawValue {
                 //backwards
                 anim.fillMode = kCAFillModeBackwards
+            }
+            
+            //is removed on completion
+            if options & UIViewAnimationOptions.isNotRemovedOnCompletion.rawValue == UIViewAnimationOptions.isNotRemovedOnCompletion.rawValue {
+                anim.isRemovedOnCompletion = false
+            } else {
+                anim.isRemovedOnCompletion = true
             }
         }
         
