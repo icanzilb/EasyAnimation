@@ -271,7 +271,7 @@ extension UIView {
         
         //run pending animations
         for anim in context.pendingAnimations {
-            print("pending: \(anim.keyPath) from \(anim.fromValue) to \(anim.layer.value(forKeyPath: anim.keyPath))")
+            //print("pending: \(anim.keyPath) from \(anim.fromValue) to \(anim.layer.value(forKeyPath: anim.keyPath))")
             anim.layer.add(EA_animation(anim, context: context), forKey: nil)
         }
         
