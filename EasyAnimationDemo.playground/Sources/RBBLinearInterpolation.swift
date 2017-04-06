@@ -10,17 +10,17 @@
 //  RBBLinearInterpolation.swift
 //
 //  Swift intepretation of the Objective-C original by Marin Todorov
-//  Copyright (c) 2015 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
 //
 
 import UIKit
 
-typealias RBBLinearInterpolation = (fraction: CGFloat)->AnyObject
+typealias RBBLinearInterpolation = (_ fraction: CGFloat) -> Any
 
 class RBBInterpolator
 {
     // MARK: public interpolation methods
-    static func interpolate(from: Any, to: Any) -> RBBLinearInterpolation
+    static func interpolate(_ from: Any, to: Any) -> RBBLinearInterpolation
     {
         //Int
         if let from = from as? Int, let to = to as? Int {
@@ -45,51 +45,49 @@ class RBBInterpolator
         //CGColorRef
         
         //NSValue
-        if let from = from as? NSValue, to = to as? NSValue {
-            let type = String.fromCString(from.objCType) ?? "" //should check to's type too?
+        if let from = from as? NSValue, let to = to as? NSValue {
+            let type = String(cString: from.objCType) //should check to's type too?
 
             //CGPoint
             if type.hasPrefix("{CGPoint") {
-                return self.RBBInterpolateCGPoint(from.CGPointValue(), to: to.CGPointValue())
+                return self.RBBInterpolateCGPoint(from.cgPointValue, to: to.cgPointValue)
             }
             //CGSize
             if type.hasPrefix("{CGSize") {
-                return self.RBBInterpolateCGSize(from.CGSizeValue(), to: to.CGSizeValue())
+                return self.RBBInterpolateCGSize(from.cgSizeValue, to: to.cgSizeValue)
             }
             //CGRect
             if type.hasPrefix("{CGRect") {
-                return self.RBBInterpolateCGRect(from.CGRectValue(), to: to.CGRectValue())
+                return self.RBBInterpolateCGRect(from.cgRectValue, to: to.cgRectValue)
             }
             //CATransform3D
             if type.hasPrefix("{CATransform3D") {
-                return self.RBBInterpolateCATransform3D(from.CATransform3DValue, to: to.CATransform3DValue)
+                return self.RBBInterpolateCATransform3D(from.caTransform3DValue, to: to.caTransform3DValue)
             }
         }
         
         //other type?
-        if let from: AnyObject = from as? AnyObject, let to: AnyObject = to as? AnyObject {
-            let _: RBBLinearInterpolation = {fraction in
-                return (fraction < 0.5) ? from : to
-            }
+        let _: RBBLinearInterpolation = {fraction in
+            return ((fraction < 0.5) ? from : to) as AnyObject
         }
-        
-        //core foundation
-        let fromRefType = CFGetTypeID(from as! CFTypeRef)
-        let toRefType = CFGetTypeID(to as! CFTypeRef)
 
-        if fromRefType == CGColorGetTypeID() && toRefType == CGColorGetTypeID() {
+        //core foundation
+        let fromRefType = CFGetTypeID(from as CFTypeRef)
+        let toRefType = CFGetTypeID(to as CFTypeRef)
+
+        if fromRefType == CGColor.typeID && toRefType == CGColor.typeID {
             //CGColor
-            let fromCGColor = from as! CGColorRef
-            let toCGColor = to as! CGColorRef
+            let fromCGColor = from as! CGColor
+            let toCGColor = to as! CGColor
             
-            return self.RBBInterpolateUIColor(UIColor(CGColor: fromCGColor), to: UIColor(CGColor: toCGColor))
+            return self.RBBInterpolateUIColor(UIColor(cgColor: fromCGColor), to: UIColor(cgColor: toCGColor))
         }
         
         fatalError("Unknown type of animated property")
     }
     
     // MARK: private interpolation methods
-    private static func RBBInterpolateCATransform3D(from: CATransform3D, to: CATransform3D) -> RBBLinearInterpolation
+    private static func RBBInterpolateCATransform3D(_ from: CATransform3D, to: CATransform3D) -> RBBLinearInterpolation
     {
         let delta = CATransform3D(
             m11: to.m11 - from.m11,
@@ -129,13 +127,13 @@ class RBBInterpolator
                 m43: from.m43 + fraction * delta.m43,
                 m44: from.m44 + fraction * delta.m44)
             
-            return NSValue(CATransform3D: transform)
+            return NSValue(caTransform3D: transform)
         }
         
         return result
     }
     
-    private static func RBBInterpolateCGRect(from: CGRect, to: CGRect) -> RBBLinearInterpolation
+    private static func RBBInterpolateCGRect(_ from: CGRect, to: CGRect) -> RBBLinearInterpolation
     {
         let deltaX = to.origin.x - from.origin.x
         let deltaY = to.origin.y - from.origin.y
@@ -149,13 +147,13 @@ class RBBInterpolator
                 width: from.size.width + fraction * deltaWidth,
                 height: from.size.height + fraction * deltaHeight)
             
-            return NSValue(CGRect: rect)
+            return NSValue(cgRect: rect)
         }
         
         return result
     }
     
-    private static func RBBInterpolateCGPoint(from: CGPoint, to: CGPoint) -> RBBLinearInterpolation
+    private static func RBBInterpolateCGPoint(_ from: CGPoint, to: CGPoint) -> RBBLinearInterpolation
     {
         let deltaX = to.x - from.x
         let deltaY = to.y - from.y
@@ -166,13 +164,13 @@ class RBBInterpolator
                 y: from.y + fraction * deltaY
             )
             
-            return NSValue(CGPoint: point)
+            return NSValue(cgPoint: point)
         }
         
         return result
     }
     
-    private static func RBBInterpolateCGSize(from: CGSize, to: CGSize) -> RBBLinearInterpolation
+    private static func RBBInterpolateCGSize(_ from: CGSize, to: CGSize) -> RBBLinearInterpolation
     {
         let deltaWidth = to.width - from.width
         let deltaHeight = to.height - from.height
@@ -183,24 +181,24 @@ class RBBInterpolator
                 height: from.height + fraction * deltaHeight
             )
             
-            return NSValue(CGSize: size)
+            return NSValue(cgSize: size)
         }
         
         return result
     }
     
-    private static func RBBInterpolateCGFloat(from: CGFloat, to: CGFloat) -> RBBLinearInterpolation
+    private static func RBBInterpolateCGFloat(_ from: CGFloat, to: CGFloat) -> RBBLinearInterpolation
     {
         let delta = to - from
         
         let result: RBBLinearInterpolation = {fraction in
-            return from + fraction * delta
+            return (from + fraction * delta) as AnyObject
         }
         
         return result
     }
     
-    private static func RBBInterpolateUIColor(from: UIColor, to: UIColor) -> RBBLinearInterpolation
+    private static func RBBInterpolateUIColor(_ from: UIColor, to: UIColor) -> RBBLinearInterpolation
     {
         var fromHue: CGFloat = 0.0
         var fromSaturation: CGFloat = 0.0
@@ -227,7 +225,7 @@ class RBBInterpolator
             let brightness: CGFloat = fromBrightness + fraction * deltaBrightness
             let alpha: CGFloat = fromAlpha + fraction * deltaAlpha
             
-            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).CGColor
+            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
         }
         
         return result

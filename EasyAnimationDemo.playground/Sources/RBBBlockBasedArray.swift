@@ -10,12 +10,12 @@
 //  RBBBlockBasedArray.swift
 //
 //  Swift intepretation of the Objective-C original by Marin Todorov
-//  Copyright (c) 2015 Underplot ltd. All rights reserved.
+//  Copyright (c) 2015-2016 Underplot ltd. All rights reserved.
 //
 
 import Foundation
 
-typealias RBBBlockBasedArrayBlock = (Int) -> AnyObject
+typealias RBBBlockBasedArrayBlock = (Int) -> Any
 
 class RBBBlockBasedArray: NSArray {
     
@@ -25,7 +25,7 @@ class RBBBlockBasedArray: NSArray {
     //can't do custom init because it's declared in an NSArray extension originally
     //and can't override it from here in Swift 1.2; need to do initialization from an ordinary method
     
-    func setCount(count: Int, block: RBBBlockBasedArrayBlock) {
+    func setCount(_ count: Int, block: @escaping RBBBlockBasedArrayBlock) {
         self.countBlockBased = count;
         self.block = block
     }
@@ -35,8 +35,12 @@ class RBBBlockBasedArray: NSArray {
     }
     
     //will crash if block is not set
-    override func objectAtIndex(index: Int) -> AnyObject {
+
+    override func object(at index: Int) -> Any {
         return block!(index)
     }
-    
+
+    func asAnys() -> [Any] {
+        return map {$0 as Any}
+    }
 }

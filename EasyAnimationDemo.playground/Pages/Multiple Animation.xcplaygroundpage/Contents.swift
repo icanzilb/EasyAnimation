@@ -3,37 +3,30 @@
 import Foundation
 import UIKit
 import XCPlayground
+import PlaygroundSupport
 
-
-func delay(seconds seconds: Double, completion:()->()) {
-    let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64( Double(NSEC_PER_SEC) * seconds ))
-    
-    dispatch_after(popTime, dispatch_get_main_queue()) {
+func delay(seconds: Double, completion:@escaping ()->()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
         completion()
-    }
+    })
 }
 
 //: Views Setup
 var viewCount: Int = 0
 let maxViews: Int = 190
 
-
-let containerRect = CGRectMake(0, 0, 400, 800)
+let containerRect = CGRect(x: 0,y: 0,width: 400,height: 800)
 let containerView = UIView(frame: containerRect)
-containerView.backgroundColor = UIColor.whiteColor()
+containerView.backgroundColor = UIColor.white
 
-let countLabel: UILabel = UILabel(frame: CGRectMake(170,50,200,50))
+let countLabel: UILabel = UILabel(frame: CGRect(x: 170,y: 50,width: 200,height: 50))
 containerView.addSubview(countLabel)
 
-
-let playground = XCPlaygroundPage.currentPage
-playground.liveView = containerView
-
-
+PlaygroundPage.current.liveView = containerView
 
 //: Animation
 func spawn() {
-    viewCount++
+    viewCount += 1
     if viewCount > maxViews {
         return
     }
@@ -44,17 +37,16 @@ func spawn() {
     containerView.addSubview(v)
     
     let duration = 5.0
-    
-    UIView.animateAndChainWithDuration(duration, delay: 0.0, options: [], animations: {
+    UIView.animateAndChain(withDuration: duration, delay: 0.0, options: [], animations: { 
         v.center.y += 250.0
-        }, completion: nil).animateWithDuration(duration, animations: {
-            v.center.x += 200.0
-        }).animateWithDuration(duration, animations: {
-            v.center.y -= 250.0
-        }).animateWithDuration(duration, delay: 0.0, options: .Repeat, animations: {
-            v.center.x -= 200.0
-            }, completion: nil)
-    
+    }, completion: nil).animate(withDuration: duration) {
+        v.center.x += 200.0
+    }.animate(withDuration: duration) {
+        v.center.y -= 250.0
+    }.animate(withDuration: duration, delay: 0.0, options: .repeat, animations: { 
+        v.center.x -= 200.0
+    }, completion: nil)
+  
     countLabel.text = "\(viewCount) views"
     
     delay(seconds: 0.10, completion: {
