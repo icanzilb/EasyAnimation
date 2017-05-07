@@ -241,7 +241,7 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
     public var description: String {
         get {
             if debug {
-                return "animation #\(self.debugNumber) [\(self.identifier)] prev: \(self.prevDelayedAnimation?.debugNumber) next: \(self.nextDelayedAnimation?.debugNumber)"
+                return "animation #\(self.debugNumber) [\(self.identifier)] prev: \(String(describing: self.prevDelayedAnimation?.debugNumber)) next: \(String(describing: self.nextDelayedAnimation?.debugNumber))"
             } else {
                 return "<EADelayedAnimation>"
             }
