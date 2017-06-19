@@ -35,7 +35,7 @@ class DemoLayerViewAnimationsViewController: UIViewController {
                 var trans3d = CATransform3DIdentity
                 trans3d.m34 = -1.0/500.0
 
-                let rotationTransform = CATransform3DRotate(trans3d, CGFloat(-M_PI_4), 0.0, 1.0, 0.0)
+                let rotationTransform = CATransform3DRotate(trans3d, CGFloat(-Double.pi/4), 0.0, 1.0, 0.0)
                 let translationTransform = CATransform3DMakeTranslation(-50.0, 0, 0)
                 self.blueSquare.layer.transform = CATransform3DConcat(rotationTransform, translationTransform)
                 

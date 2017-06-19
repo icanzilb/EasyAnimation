@@ -1,6 +1,8 @@
 ![](etc/EA.png)
 
-#### ver 1.1
+#### ver 2.0
+
+**NB!** _Breaking changes_ in 2.0 - due to a lot of requests EasyAnimation does NOT automatically install itself when imported. You **need** to enable it by calling `EasyAnimation.enable()` somewhere in your code (AppDelegate is a good idea).
 
 _The library doesn't use any private APIs - apps using it should be fine for release on the App Store._
 
@@ -30,11 +32,13 @@ Intro
 
 **EasyAnimation** extends what UIKit offers in terms of animations and makes your life much easier because you can do much more without learning some perky new syntax.
 
-### Versions
+In version 2.0 and higher to enable all EasyAnimation features you need to run **once** this code - AppDelegate is a good place since it'll enable EasyAnimation as soon as your app starts.
 
-Easy Animation is _Swift 3.0_. 
+<pre lang="Swift">
+    EasyAnimation.enable()
+</pre>
 
-If you are looking for a Swift 2 version check [Easy Animation 1.0.5](https://github.com/icanzilb/EasyAnimation/releases/tag/1.0.5).
+In your other classes you don't need to import EasyAnimation or do anything else. Once you call `enable()` afterwards you use the normal UIKit APIs like usual.
 
 <a name="layers"></a>
 Easy Layer Animations
@@ -287,6 +291,8 @@ To Do
   
 Version History
 ========
+
+* 2.0 - `initialize()` is deprecated so in need of manual initialization
  * 1.1 - Xcode 8
 * 1.0.5 - Xcode 7.3 compatibility 
 * 1.0.4 - Swift 3 compatibility changes

@@ -37,8 +37,8 @@ class DemoChainsViewController: UIViewController {
                 
         }).animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.0, options: [], animations: {
             
-            self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI_2))
-            self.blueSquare.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI_2), 0.0, 0.0, 1.0)
+            self.redSquare.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi/4))
+            self.blueSquare.layer.transform = CATransform3DMakeRotation(CGFloat(Double.pi/4), 0.0, 0.0, 1.0)
             
         }, completion: nil).animate(withDuration: 0.5, animations: {
             

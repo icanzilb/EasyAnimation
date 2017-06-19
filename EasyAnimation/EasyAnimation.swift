@@ -80,25 +80,16 @@ private class CompletionBlock {
     static fileprivate var activeAnimationContexts = [AnimationContext]()
 
     @discardableResult
-    override init() {}
+    override init() { }
 
-    @objc override public class func initialize() {
-        #if !EANoSwizzling
-        UIView.replaceAnimationMethods()
-        CALayer.replaceAnimationMethods()
-        #endif
+    static func enable() {
+        _ = swizzle
     }
 
-    static private let _disableSwizzling: Void = {
-        #if !EANoSwizzling
+    static private let swizzle: Void = {
         UIView.replaceAnimationMethods()
         CALayer.replaceAnimationMethods()
-        #endif
     }()
-
-    public class func disableSwizzling() {
-        _disableSwizzling
-    }
 }
 
 // MARK: EA animatable properties
@@ -113,10 +104,8 @@ private let vanillaLayerKeys = [
 
 private let specializedLayerKeys: [String: [String]] = [
     CAEmitterLayer.self.description(): ["emitterPosition", "emitterZPosition", "emitterSize", "spin", "velocity", "birthRate", "lifetime"],
-    //TODO: test animating arrays, eg colors & locations
     CAGradientLayer.self.description(): ["colors", "locations", "endPoint", "startPoint"],
     CAReplicatorLayer.self.description(): ["instanceDelay", "instanceTransform", "instanceColor", "instanceRedOffset", "instanceGreenOffset", "instanceBlueOffset", "instanceAlphaOffset"],
-    //TODO: test animating paths
     CAShapeLayer.self.description(): ["path", "fillColor", "lineDashPhase", "lineWidth", "miterLimit", "strokeColor", "strokeStart", "strokeEnd"],
     CATextLayer.self.description(): ["fontSize", "foregroundColor"]
 ]
@@ -140,15 +129,7 @@ Check the README for code examples of what features this extension adds.
 
 extension UIView {
     
-    //TODO: experiment more with path animations
-    //public var animationPath: CGPath? { set {} get {return nil}}
-    
     // MARK: UIView animation & action methods
-
-    override open class func initialize() {
-        super.initialize()
-        EasyAnimation()
-    }
 
     fileprivate static func replaceAnimationMethods() {
         //replace actionForLayer...

@@ -8,9 +8,8 @@
 
 import UIKit
 
-func delay(seconds: Double, completion:@escaping () -> Void) {
-    let popTime = DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * seconds )) / Double(NSEC_PER_SEC)
-    DispatchQueue.main.asyncAfter(deadline: popTime, execute: completion)
+func delay(seconds: Double, completion: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
 }
 
 @UIApplicationMain
@@ -19,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        EasyAnimation.enable()
         return true
     }
 }
