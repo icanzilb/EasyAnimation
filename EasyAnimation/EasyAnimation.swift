@@ -82,7 +82,7 @@ private class CompletionBlock {
     @discardableResult
     override init() { }
 
-    static func enable() {
+    public static func enable() {
         _ = swizzle
     }
 
