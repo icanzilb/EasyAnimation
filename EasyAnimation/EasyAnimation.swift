@@ -133,26 +133,40 @@ extension UIView {
 
     fileprivate static func replaceAnimationMethods() {
         //replace actionForLayer...
-        method_exchangeImplementations(
-            class_getInstanceMethod(self, #selector(UIView.action(for:forKey:))),
-            class_getInstanceMethod(self, #selector(UIView.EA_actionForLayer(_:forKey:))))
+        if
+            let origMethod = class_getInstanceMethod(self, #selector(UIView.action(for:forKey:))),
+            let eaMethod = class_getInstanceMethod(self, #selector(UIView.EA_actionForLayer(_:forKey:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
         
         //replace animateWithDuration...
-        method_exchangeImplementations(
-            class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:))),
-            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:))))
-        method_exchangeImplementations(
-            class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:completion:))))
-        method_exchangeImplementations(
-            class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:options:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:options:animations:completion:))))
-        method_exchangeImplementations(
-            class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))),
-            class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))))
+        if
+            let origMethod = class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:))),
+            let eaMethod = class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
+        
+        if
+            let origMethod = class_getClassMethod(self, #selector(UIView.animate(withDuration:animations:completion:))),
+            let eaMethod = class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:animations:completion:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
+        
+        if
+            let origMethod = class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:options:animations:completion:))),
+            let eaMethod = class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:options:animations:completion:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
+        
+        if
+            let origMethod = class_getClassMethod(self, #selector(UIView.animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))),
+            let eaMethod = class_getClassMethod(self, #selector(UIView.EA_animate(withDuration:delay:usingSpringWithDamping:initialSpringVelocity:options:animations:completion:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
         
     }
     
+    @objc
     func EA_actionForLayer(_ layer: CALayer!, forKey key: String!) -> CAAction! {
 
         let result = EA_actionForLayer(layer, forKey: key)
@@ -185,6 +199,7 @@ extension UIView {
         return result
     }
     
+    @objc
     class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         //create context
         let context = AnimationContext()
@@ -224,6 +239,7 @@ extension UIView {
         CATransaction.commit()
     }
     
+    @objc
     class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         
         //create context
@@ -268,14 +284,17 @@ extension UIView {
         CATransaction.commit()
     }
     
+    @objc
     class func EA_animate(withDuration duration: TimeInterval, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) {
         animate(withDuration: duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
+    @objc
     class func EA_animate(withDuration duration: TimeInterval, animations: @escaping () -> Void) {
         animate(withDuration: duration, animations: animations, completion: nil)
     }
     
+    @objc
     class func EA_wrappedCompletionHandler(_ timer: Timer) {
         if let completionBlock = timer.userInfo as? CompletionBlock {
             completionBlock.wrapCompletion(true)
@@ -444,14 +463,16 @@ extension UIView {
 
 extension CALayer {
     // MARK: CALayer animations
-
     fileprivate static func replaceAnimationMethods() {
         //replace actionForKey
-        method_exchangeImplementations(
-            class_getInstanceMethod(self, #selector(CALayer.action(forKey:))),
-            class_getInstanceMethod(self, #selector(CALayer.EA_action(forKey:))))
+        if
+            let origMethod = class_getInstanceMethod(self, #selector(CALayer.action(forKey:))),
+            let eaMethod = class_getInstanceMethod(self, #selector(CALayer.EA_action(forKey:))) {
+            method_exchangeImplementations(origMethod, eaMethod)
+        }
     }
     
+    @objc
     public func EA_action(forKey key: String!) -> CAAction! {
         
         //check if the layer has a view-delegate
