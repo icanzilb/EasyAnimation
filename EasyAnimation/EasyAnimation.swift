@@ -78,18 +78,30 @@ private class CompletionBlock {
 
 @objc public class EasyAnimation: NSObject {
     static fileprivate var activeAnimationContexts = [AnimationContext]()
+	static fileprivate var isEnabled = false
 
     @discardableResult
     override init() { }
 
     public static func enable() {
-        _ = swizzle
+		guard !isEnabled else { return }
+		
+		isEnabled = true
+		swizzle()
     }
-
-    static private let swizzle: Void = {
-        UIView.replaceAnimationMethods()
-        CALayer.replaceAnimationMethods()
-    }()
+	
+	public static func disable() {
+		guard isEnabled else { return }
+		
+		isEnabled = false
+		swizzle()
+	}
+	
+	private static func swizzle() {
+		UIView.replaceAnimationMethods()
+		CALayer.replaceAnimationMethods()
+	}
+	
 }
 
 // MARK: EA animatable properties
