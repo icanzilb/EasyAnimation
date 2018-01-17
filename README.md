@@ -40,6 +40,12 @@ In version 2.0 and higher to enable all EasyAnimation features you need to run *
 
 In your other classes you don't need to import EasyAnimation or do anything else. Once you call `enable()` afterwards you use the normal UIKit APIs like usual.
 
+You can also call `disable()` if you want to disable all EasyAnimation features.
+
+<pre lang="Swift">
+    EasyAnimation.disable()
+</pre>
+
 <a name="layers"></a>
 Easy Layer Animations
 ========
