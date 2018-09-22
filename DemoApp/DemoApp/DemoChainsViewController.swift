@@ -63,7 +63,7 @@ class DemoChainsViewController: UIViewController {
     @IBAction func actionCancelSequence(_ sender: AnyObject) {
         
         if let sender = sender as? UIButton {
-            sender.setTitle("Cancelled", for: UIControlState())
+          sender.setTitle("Cancelled", for: UIControl.State())
             sender.isEnabled = false
         }
         

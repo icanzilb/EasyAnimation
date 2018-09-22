@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "EasyAnimation"
-  s.version          = "2.0.2"
+  s.version          = "2.2"
   s.summary          = "A Swift library to take the power of UIView.animateWithDuration(_:, animations:...) to a whole new level!"
   s.description      = <<-DESC
 	EasyAnimation extends the animation methods that are built-in in UIKit and allows you to:
