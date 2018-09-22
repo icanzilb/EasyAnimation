@@ -38,7 +38,7 @@ private class AnimationContext {
     var duration: TimeInterval = 1.0
     var currentTime: TimeInterval = {CACurrentMediaTime()}()
     var delay: TimeInterval = 0.0
-    var options: UIViewAnimationOptions? = nil
+    var options: UIView.AnimationOptions? = nil
     var pendingAnimations = [PendingAnimation]()
     
     //spring additions
@@ -110,16 +110,16 @@ private let specializedLayerKeys: [String: [String]] = [
     CATextLayer.self.description(): ["fontSize", "foregroundColor"]
 ]
 
-public extension UIViewAnimationOptions {
+public extension UIView.AnimationOptions {
     //CA Fill modes
-    static let fillModeNone = UIViewAnimationOptions(rawValue: 0)
-    static let fillModeForwards = UIViewAnimationOptions(rawValue: 1024)
-    static let fillModeBackwards = UIViewAnimationOptions(rawValue: 2048)
-    static let fillModeBoth = UIViewAnimationOptions(rawValue: 1024 + 2048)
+    static let fillModeNone = UIView.AnimationOptions(rawValue: 0)
+    static let fillModeForwards = UIView.AnimationOptions(rawValue: 1024)
+    static let fillModeBackwards = UIView.AnimationOptions(rawValue: 2048)
+    static let fillModeBoth = UIView.AnimationOptions(rawValue: 1024 + 2048)
     
     //CA Remove on completion
-    static let isRemovedOnCompletion = UIViewAnimationOptions(rawValue: 0)
-    static let isNotRemovedOnCompletion = UIViewAnimationOptions(rawValue: 16384)
+    static let isRemovedOnCompletion = UIView.AnimationOptions(rawValue: 0)
+    static let isNotRemovedOnCompletion = UIView.AnimationOptions(rawValue: 16384)
 }
 
 /**
@@ -200,7 +200,7 @@ extension UIView {
     }
     
     @objc
-    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIView.AnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         //create context
         let context = AnimationContext()
         context.duration = duration
@@ -240,7 +240,7 @@ extension UIView {
     }
     
     @objc
-    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
+    class func EA_animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIView.AnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)?) {
         
         //create context
         let context = AnimationContext()
@@ -348,45 +348,45 @@ extension UIView {
         
         if context.delay > 0.0 {
             anim.beginTime = context.currentTime + context.delay
-            anim.fillMode = kCAFillModeBackwards
+            anim.fillMode = CAMediaTimingFillMode.backwards
         }
         
         //options
         if let options = context.options?.rawValue {
             
-            if options & UIViewAnimationOptions.beginFromCurrentState.rawValue == 0 { //only repeat if not in a chain
-                anim.autoreverses = (options & UIViewAnimationOptions.autoreverse.rawValue == UIViewAnimationOptions.autoreverse.rawValue)
-                anim.repeatCount = (options & UIViewAnimationOptions.repeat.rawValue == UIViewAnimationOptions.repeat.rawValue) ? Float.infinity : 0
+            if options & UIView.AnimationOptions.beginFromCurrentState.rawValue == 0 { //only repeat if not in a chain
+                anim.autoreverses = (options & UIView.AnimationOptions.autoreverse.rawValue == UIView.AnimationOptions.autoreverse.rawValue)
+                anim.repeatCount = (options & UIView.AnimationOptions.repeat.rawValue == UIView.AnimationOptions.repeat.rawValue) ? Float.infinity : 0
             }
             
             //easing
-            var timingFunctionName = kCAMediaTimingFunctionEaseInEaseOut
+            var timingFunctionName = CAMediaTimingFunctionName.easeInEaseOut
             
-            if options & UIViewAnimationOptions.curveLinear.rawValue == UIViewAnimationOptions.curveLinear.rawValue {
+            if options & UIView.AnimationOptions.curveLinear.rawValue == UIView.AnimationOptions.curveLinear.rawValue {
                 //first check for linear (it's this way to take up only 2 bits)
-                timingFunctionName = kCAMediaTimingFunctionLinear
-            } else if options & UIViewAnimationOptions.curveEaseIn.rawValue == UIViewAnimationOptions.curveEaseIn.rawValue {
-                timingFunctionName = kCAMediaTimingFunctionEaseIn
-            } else if options & UIViewAnimationOptions.curveEaseOut.rawValue == UIViewAnimationOptions.curveEaseOut.rawValue {
-                timingFunctionName = kCAMediaTimingFunctionEaseOut
+                timingFunctionName = CAMediaTimingFunctionName.linear
+            } else if options & UIView.AnimationOptions.curveEaseIn.rawValue == UIView.AnimationOptions.curveEaseIn.rawValue {
+                timingFunctionName = CAMediaTimingFunctionName.easeIn
+            } else if options & UIView.AnimationOptions.curveEaseOut.rawValue == UIView.AnimationOptions.curveEaseOut.rawValue {
+                timingFunctionName = CAMediaTimingFunctionName.easeOut
             }
             
             anim.timingFunction = CAMediaTimingFunction(name: timingFunctionName)
             
             //fill mode
-            if options & UIViewAnimationOptions.fillModeBoth.rawValue == UIViewAnimationOptions.fillModeBoth.rawValue {
+            if options & UIView.AnimationOptions.fillModeBoth.rawValue == UIView.AnimationOptions.fillModeBoth.rawValue {
                 //both
-                anim.fillMode = kCAFillModeBoth
-            } else if options & UIViewAnimationOptions.fillModeForwards.rawValue == UIViewAnimationOptions.fillModeForwards.rawValue {
+                anim.fillMode = CAMediaTimingFillMode.both
+            } else if options & UIView.AnimationOptions.fillModeForwards.rawValue == UIView.AnimationOptions.fillModeForwards.rawValue {
                 //forward
-                anim.fillMode = (anim.fillMode == kCAFillModeBackwards) ? kCAFillModeBoth : kCAFillModeForwards
-            } else if options & UIViewAnimationOptions.fillModeBackwards.rawValue == UIViewAnimationOptions.fillModeBackwards.rawValue {
+                anim.fillMode = (anim.fillMode == CAMediaTimingFillMode.backwards) ? CAMediaTimingFillMode.both : CAMediaTimingFillMode.forwards
+            } else if options & UIView.AnimationOptions.fillModeBackwards.rawValue == UIView.AnimationOptions.fillModeBackwards.rawValue {
                 //backwards
-                anim.fillMode = kCAFillModeBackwards
+                anim.fillMode = CAMediaTimingFillMode.backwards
             }
             
             //is removed on completion
-            if options & UIViewAnimationOptions.isNotRemovedOnCompletion.rawValue == UIViewAnimationOptions.isNotRemovedOnCompletion.rawValue {
+            if options & UIView.AnimationOptions.isNotRemovedOnCompletion.rawValue == UIView.AnimationOptions.isNotRemovedOnCompletion.rawValue {
                 anim.isRemovedOnCompletion = false
             } else {
                 anim.isRemovedOnCompletion = true
@@ -409,7 +409,7 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, options: UIView.AnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
         let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
@@ -440,7 +440,7 @@ extension UIView {
     
     :returns: The created request.
     */
-    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
+    public class func animateAndChain(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat, options: UIView.AnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)?) -> EAAnimationFuture {
         
         let currentAnimation = EAAnimationFuture()
         currentAnimation.duration = duration
