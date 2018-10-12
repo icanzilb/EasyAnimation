@@ -399,6 +399,19 @@ extension UIView {
     // MARK: chain animations
     
     /**
+     Creates and runs an animation which allows other animations to be chained to it and to each other.
+     
+     :param: duration The animation duration in seconds
+     :param: animations Animation closure
+     :param: completion Completion closure of type (Bool)->Void
+     
+     :returns: The created request.
+     */
+    public class func animateAndChain(withDuration duration: TimeInterval, animations: @escaping () -> Void) -> EAAnimationFuture {
+        return UIView.animateAndChain(withDuration: duration, delay: 0, options: [], animations: animations, completion: nil)
+    }
+    
+    /**
     Creates and runs an animation which allows other animations to be chained to it and to each other.
     
     :param: duration The animation duration in seconds
