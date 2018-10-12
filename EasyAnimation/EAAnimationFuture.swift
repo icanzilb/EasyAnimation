@@ -133,6 +133,33 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
         return nextDelayedAnimation!
     }
     
+    /**
+     Waits the specified duration.
+     
+     :param: duration The wait duration in seconds.
+     
+     :returns: The created request.
+     */
+    public func wait(_ duration: TimeInterval) -> EAAnimationFuture {
+        return animate(withDuration: 0, delay: duration, options: [], animations: {}, completion: nil)
+    }
+    
+    /**
+    Runs the code in the input block without animating.
+    
+    :param: block The block of code to run
+    
+    :returns: The created request.
+    */
+    @discardableResult
+    public func `do`(_ block: @escaping () -> Void) -> EAAnimationFuture {
+        return animate(withDuration: 0, animations: {}) { _ in
+            DispatchQueue.main.async {
+                block()
+            }
+        }
+    }
+    
     //MARK: - Animation control methods
     
     /**
