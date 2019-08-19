@@ -168,7 +168,7 @@ public class EAAnimationFuture: Equatable, CustomStringConvertible {
             previous.nextDelayedAnimation = nil
             previous.detachFromChain()
         } else {
-            if let index = EAAnimationFuture.animations.index(of: self) {
+            if let index = EAAnimationFuture.animations.firstIndex(of: self) {
                 if debug {
                     print("cancel root animation #\(EAAnimationFuture.animations[index])")
                 }
